@@ -139,3 +139,24 @@ Breadcrumbs::for('store_type-edit', function (BreadcrumbTrail $trail, $storeType
     $trail->parent('store_type-show', $storeType);
     $trail->push(__('store_types.edit'), route('admin.store_types.edit', $storeType->id));
 });
+
+// Plans
+Breadcrumbs::for('plan', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('plans'), route('admin.plans.index'));
+});
+
+Breadcrumbs::for('plan-create', function (BreadcrumbTrail $trail) {
+    $trail->parent('plan');
+    $trail->push(__('plans.create'), route('admin.plans.create'));
+});
+
+Breadcrumbs::for('plan-show', function (BreadcrumbTrail $trail, $plan) {
+    $trail->parent('plan');
+    $trail->push(__('plans.show', ['name' => $plan->name]), route('admin.plans.show', $plan->id));
+});
+
+Breadcrumbs::for('plan-edit', function (BreadcrumbTrail $trail, $plan) {
+    $trail->parent('plan-show', $plan);
+    $trail->push(__('plans.edit'), route('admin.plans.edit', $plan->id));
+});

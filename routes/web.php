@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\StoreTypeController;
-
+use App\Http\Controllers\Admin\PlanController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -48,6 +48,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         // store Types
         Route::resource('store_types', StoreTypeController::class);
+
+        // Plans
+        Route::resource('plans', PlanController::class);
     });
 
     require __DIR__ . '/auth.php';

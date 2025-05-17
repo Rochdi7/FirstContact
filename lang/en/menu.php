@@ -5,13 +5,12 @@ return [
     'users' => 'Users',
     'permissions' => 'Permissions',
     'roles' => 'Roles',
+    'plans' => 'Plans',
     'settings' => 'Settings',
-    'menu_settings'=>'Settings',
-    'countries'=>'Countries',
-    'currencies'=>'Currencies',
-    'store_types'=>'Store Type',
-
-
+    'menu_settings' => 'Settings',
+    'countries' => 'Countries',
+    'currencies' => 'Currencies',
+    'store_types' => 'Store Type',
     'dashboard' => 'Dashboard',
     'logout' => 'Logout',
 ];

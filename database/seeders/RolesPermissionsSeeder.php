@@ -23,7 +23,7 @@ class RolesPermissionsSeeder extends Seeder
             'last_name' => 'Devaga',
             'approved' => 1,
             'email' => 'admin@devaga.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('1234')
         ]);
 
         // Create 'Admin' Role
