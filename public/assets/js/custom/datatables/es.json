@@ -1,0 +1,133 @@
+{
+    "emptyTable": "No hay datos disponibles en la tabla",
+    "lengthMenu": "_MENU_",
+    "loadingRecords": "Cargando...",
+    "processing": "Procesando...",
+    "zeroRecords": "No se encontraron registros coincidentes",
+    "paginate": {
+        "first": "Primero",
+        "last": "Último",
+        "previous": "Anterior",
+        "next": "Siguiente"
+    },
+    "aria": {
+        "sortAscending": ": activar para ordenar la columna de manera ascendente",
+        "sortDescending": ": activar para ordenar la columna de manera descendente"
+    },
+    "select": {
+        "rows": {
+            "_": "%d filas seleccionadas",
+            "1": "1 fila seleccionada"
+        },
+        "cells": {
+            "1": "1 celda seleccionada",
+            "_": "%d celdas seleccionadas"
+        },
+        "columns": {
+            "1": "1 columna seleccionada",
+            "_": "%d columnas seleccionadas"
+        }
+    },
+    "autoFill": {
+        "cancel": "Cancelar",
+        "fill": "Rellenar todas las celdas con <i>%d<\/i>",
+        "fillHorizontal": "Rellenar celdas horizontalmente",
+        "fillVertical": "Rellenar celdas verticalmente"
+    },
+    "searchBuilder": {
+        "conditions": {
+            "date": {
+                "after": "Después de",
+                "before": "Antes de",
+                "between": "Entre",
+                "empty": "Vacío",
+                "equals": "Igual a",
+                "not": "Diferente de",
+                "notBetween": "No entre",
+                "notEmpty": "No vacío"
+            },
+            "number": {
+                "between": "Entre",
+                "empty": "Vacío",
+                "equals": "Igual a",
+                "gt": "Mayor que",
+                "gte": "Mayor o igual que",
+                "lt": "Menor que",
+                "lte": "Menor o igual que",
+                "not": "Diferente de",
+                "notBetween": "No entre",
+                "notEmpty": "No vacío"
+            },
+            "string": {
+                "contains": "Contiene",
+                "empty": "Vacío",
+                "endsWith": "Termina con",
+                "equals": "Igual a",
+                "not": "Diferente de",
+                "notEmpty": "No vacío",
+                "startsWith": "Comienza con"
+            },
+            "array": {
+                "equals": "Igual a",
+                "empty": "Vacío",
+                "contains": "Contiene",
+                "not": "Diferente de",
+                "notEmpty": "No vacío",
+                "without": "Sin"
+            }
+        },
+        "add": "Añadir condición",
+        "button": {
+            "0": "Búsqueda avanzada",
+            "_": "Búsqueda avanzada (%d)"
+        },
+        "clearAll": "Borrar todo",
+        "condition": "Condición",
+        "data": "Datos",
+        "deleteTitle": "Eliminar regla de filtrado",
+        "logicAnd": "Y",
+        "logicOr": "O",
+        "title": {
+            "0": "Búsqueda avanzada",
+            "_": "Búsqueda avanzada (%d)"
+        },
+        "value": "Valor"
+    },
+    "searchPanes": {
+        "clearMessage": "Borrar todo",
+        "count": "{total}",
+        "title": "Filtros activos - %d",
+        "collapse": {
+            "0": "Panel de búsqueda",
+            "_": "Panel de búsqueda (%d)"
+        },
+        "countFiltered": "{shown} ({total})",
+        "emptyPanes": "No hay paneles de búsqueda",
+        "loadMessage": "Cargando panel de búsqueda..."
+    },
+    "buttons": {
+        "collection": "Colección",
+        "colvis": "Visibilidad de columnas",
+        "colvisRestore": "Restaurar visibilidad",
+        "copy": "Copiar",
+        "copySuccess": {
+            "1": "1 fila copiada al portapapeles",
+            "_": "%d filas copiadas al portapapeles"
+        },
+        "copyTitle": "Copiar al portapapeles",
+        "csv": "CSV",
+        "excel": "Excel",
+        "pageLength": {
+            "-1": "Mostrar todas las filas",
+            "_": "Mostrar %d filas"
+        },
+        "pdf": "PDF",
+        "print": "Imprimir",
+        "copyKeys": "Presiona Ctrl o ⌘ + C para copiar los datos de la tabla al portapapeles."
+    },
+    "decimal": ".",
+    "info": "Mostrando _START_ a _END_ de _TOTAL_ elementos",
+    "infoEmpty": "Mostrando 0 a 0 de 0 elementos",
+    "infoFiltered": "(filtrado de _MAX_ elementos en total)",
+    "search": "Buscar:"
+}

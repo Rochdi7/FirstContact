@@ -1,0 +1,133 @@
+{
+    "emptyTable": "Keine Daten in der Tabelle verfügbar",
+    "lengthMenu": "_MENU_",
+    "loadingRecords": "Laden...",
+    "processing": "Verarbeitung...",
+    "zeroRecords": "Keine passenden Einträge gefunden",
+    "paginate": {
+        "first": "Erste",
+        "last": "Letzte",
+        "previous": "Zurück",
+        "next": "Weiter"
+    },
+    "aria": {
+        "sortAscending": ": aktivieren, um die Spalte aufsteigend zu sortieren",
+        "sortDescending": ": aktivieren, um die Spalte absteigend zu sortieren"
+    },
+    "select": {
+        "rows": {
+            "_": "%d Zeilen ausgewählt",
+            "1": "1 Zeile ausgewählt"
+        },
+        "cells": {
+            "1": "1 Zelle ausgewählt",
+            "_": "%d Zellen ausgewählt"
+        },
+        "columns": {
+            "1": "1 Spalte ausgewählt",
+            "_": "%d Spalten ausgewählt"
+        }
+    },
+    "autoFill": {
+        "cancel": "Abbrechen",
+        "fill": "Alle Zellen mit <i>%d<\/i> ausfüllen",
+        "fillHorizontal": "Zellen horizontal ausfüllen",
+        "fillVertical": "Zellen vertikal ausfüllen"
+    },
+    "searchBuilder": {
+        "conditions": {
+            "date": {
+                "after": "Nach",
+                "before": "Vor",
+                "between": "Zwischen",
+                "empty": "Leer",
+                "equals": "Gleich",
+                "not": "Ungleich",
+                "notBetween": "Nicht zwischen",
+                "notEmpty": "Nicht leer"
+            },
+            "number": {
+                "between": "Zwischen",
+                "empty": "Leer",
+                "equals": "Gleich",
+                "gt": "Größer als",
+                "gte": "Größer oder gleich",
+                "lt": "Kleiner als",
+                "lte": "Kleiner oder gleich",
+                "not": "Ungleich",
+                "notBetween": "Nicht zwischen",
+                "notEmpty": "Nicht leer"
+            },
+            "string": {
+                "contains": "Enthält",
+                "empty": "Leer",
+                "endsWith": "Endet mit",
+                "equals": "Gleich",
+                "not": "Ungleich",
+                "notEmpty": "Nicht leer",
+                "startsWith": "Beginnt mit"
+            },
+            "array": {
+                "equals": "Gleich",
+                "empty": "Leer",
+                "contains": "Enthält",
+                "not": "Ungleich",
+                "notEmpty": "Nicht leer",
+                "without": "Ohne"
+            }
+        },
+        "add": "Bedingung hinzufügen",
+        "button": {
+            "0": "Erweiterte Suche",
+            "_": "Erweiterte Suche (%d)"
+        },
+        "clearAll": "Alles löschen",
+        "condition": "Bedingung",
+        "data": "Daten",
+        "deleteTitle": "Filterregel löschen",
+        "logicAnd": "Und",
+        "logicOr": "Oder",
+        "title": {
+            "0": "Erweiterte Suche",
+            "_": "Erweiterte Suche (%d)"
+        },
+        "value": "Wert"
+    },
+    "searchPanes": {
+        "clearMessage": "Alles löschen",
+        "count": "{total}",
+        "title": "Aktive Filter - %d",
+        "collapse": {
+            "0": "Suchbereich",
+            "_": "Suchbereich (%d)"
+        },
+        "countFiltered": "{shown} ({total})",
+        "emptyPanes": "Keine Suchbereiche",
+        "loadMessage": "Laden des Suchbereichs..."
+    },
+    "buttons": {
+        "collection": "Sammlung",
+        "colvis": "Spaltensichtbarkeit",
+        "colvisRestore": "Sichtbarkeit wiederherstellen",
+        "copy": "Kopieren",
+        "copySuccess": {
+            "1": "1 Zeile in die Zwischenablage kopiert",
+            "_": "%d Zeilen in die Zwischenablage kopiert"
+        },
+        "copyTitle": "In die Zwischenablage kopieren",
+        "csv": "CSV",
+        "excel": "Excel",
+        "pageLength": {
+            "-1": "Alle Zeilen anzeigen",
+            "_": "%d Zeilen anzeigen"
+        },
+        "pdf": "PDF",
+        "print": "Drucken",
+        "copyKeys": "Drücken Sie Strg oder ⌘ + C, um die Tabellendaten in die Zwischenablage zu kopieren."
+    },
+    "decimal": ".",
+    "info": "Zeige _START_ bis _END_ von _TOTAL_ Einträgen",
+    "infoEmpty": "Zeige 0 bis 0 von 0 Einträgen",
+    "infoFiltered": "(gefiltert aus _MAX_ Gesamteinträgen)",
+    "search": "Suchen:"
+}

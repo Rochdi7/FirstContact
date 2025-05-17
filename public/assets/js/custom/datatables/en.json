@@ -1,0 +1,201 @@
+{
+    "emptyTable": "No data available in the table",
+    "lengthMenu": "_MENU_",
+    "loadingRecords": "Loading...",
+    "processing": "Processing...",
+    "zeroRecords": "No matching records found",
+    "paginate": {
+        "first": "First",
+        "last": "Last",
+        "previous": "Previous",
+        "next": "Next"
+    },
+    "aria": {
+        "sortAscending": ": activate to sort column ascending",
+        "sortDescending": ": activate to sort column descending"
+    },
+    "select": {
+        "rows": {
+            "_": "%d rows selected",
+            "1": "1 row selected"
+        },
+        "cells": {
+            "1": "1 cell selected",
+            "_": "%d cells selected"
+        },
+        "columns": {
+            "1": "1 column selected",
+            "_": "%d columns selected"
+        }
+    },
+    "autoFill": {
+        "cancel": "Cancel",
+        "fill": "Fill all cells with <i>%d<\/i>",
+        "fillHorizontal": "Fill cells horizontally",
+        "fillVertical": "Fill cells vertically"
+    },
+    "searchBuilder": {
+        "conditions": {
+            "date": {
+                "after": "After",
+                "before": "Before",
+                "between": "Between",
+                "empty": "Empty",
+                "equals": "Equals",
+                "not": "Not",
+                "notBetween": "Not between",
+                "notEmpty": "Not empty"
+            },
+            "number": {
+                "between": "Between",
+                "empty": "Empty",
+                "equals": "Equals",
+                "gt": "Greater than",
+                "gte": "Greater than or equal to",
+                "lt": "Less than",
+                "lte": "Less than or equal to",
+                "not": "Not",
+                "notBetween": "Not between",
+                "notEmpty": "Not empty"
+            },
+            "string": {
+                "contains": "Contains",
+                "empty": "Empty",
+                "endsWith": "Ends with",
+                "equals": "Equals",
+                "not": "Not",
+                "notEmpty": "Not empty",
+                "startsWith": "Starts with"
+            },
+            "array": {
+                "equals": "Equals",
+                "empty": "Empty",
+                "contains": "Contains",
+                "not": "Not",
+                "notEmpty": "Not empty",
+                "without": "Without"
+            }
+        },
+        "add": "Add Condition",
+        "button": {
+            "0": "Advanced Search",
+            "_": "Advanced Search (%d)"
+        },
+        "clearAll": "Clear All",
+        "condition": "Condition",
+        "data": "Data",
+        "deleteTitle": "Delete filtering rule",
+        "logicAnd": "And",
+        "logicOr": "Or",
+        "title": {
+            "0": "Advanced Search",
+            "_": "Advanced Search (%d)"
+        },
+        "value": "Value"
+    },
+    "searchPanes": {
+        "clearMessage": "Clear All",
+        "count": "{total}",
+        "title": "Active Filters - %d",
+        "collapse": {
+            "0": "Search Panel",
+            "_": "Search Panel (%d)"
+        },
+        "countFiltered": "{shown} ({total})",
+        "emptyPanes": "No search panels",
+        "loadMessage": "Loading search panel..."
+    },
+    "buttons": {
+        "collection": "Collection",
+        "colvis": "Column Visibility",
+        "colvisRestore": "Restore Visibility",
+        "copy": "Copy",
+        "copySuccess": {
+            "1": "1 row copied to clipboard",
+            "_": "%d rows copied to clipboard"
+        },
+        "copyTitle": "Copy to clipboard",
+        "csv": "CSV",
+        "excel": "Excel",
+        "pageLength": {
+            "-1": "Show all rows",
+            "_": "Show %d rows"
+        },
+        "pdf": "PDF",
+        "print": "Print",
+        "copyKeys": "Press Ctrl or ⌘ + C to copy table data to your clipboard."
+    },
+    "decimal": ".",
+    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+    "infoEmpty": "Showing 0 to 0 of 0 entries",
+    "infoThousands": ",",
+    "search": "Search:",
+    "thousands": ",",
+    "infoFiltered": "(filtered from _MAX_ total entries)",
+    "datetime": {
+        "previous": "Previous",
+        "next": "Next",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "seconds": "Seconds",
+        "unknown": "-",
+        "amPm": [
+            "AM",
+            "PM"
+        ],
+        "months": {
+            "0": "January",
+            "1": "February",
+            "2": "March",
+            "3": "April",
+            "4": "May",
+            "5": "June",
+            "6": "July",
+            "7": "August",
+            "8": "September",
+            "9": "October",
+            "10": "November",
+            "11": "December"
+        },
+        "weekdays": [
+            "Sun",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Sat"
+        ]
+    },
+    "editor": {
+        "close": "Close",
+        "create": {
+            "title": "Create New Entry",
+            "submit": "Submit",
+            "button": "New"
+        },
+        "edit": {
+            "button": "Edit",
+            "title": "Edit Entry",
+            "submit": "Update"
+        },
+        "remove": {
+            "button": "Delete",
+            "title": "Delete",
+            "submit": "Delete",
+            "confirm": {
+                "_": "Are you sure you want to delete %d rows?",
+                "1": "Are you sure you want to delete 1 row?"
+            }
+        },
+        "error": {
+            "system": "A system error has occurred"
+        },
+        "multi": {
+            "noMulti": "This field can be edited individually but is not part of a group.",
+            "info": "The selected items contain different values for this field. To modify and set them to the same value, click here.",
+            "title": "Multiple Values",
+            "restore": "Undo changes"
+        }
+    }
+}
