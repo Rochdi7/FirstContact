@@ -3,112 +3,114 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePlanRequest;
+use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PlanController extends Controller
 {
-    public function index()
-    {
-        if (request()->ajax()) {
-            $data = Plan::all();
-            return datatables()->of($data)
-                ->addColumn('ai_enabled', function ($row) {
-                    return $row->ai_enabled ? 'Yes' : 'No';
-                })
-                ->addColumn('features', function ($row) {
-                    if (is_array($row->features)) {
-                        return implode(", ", $row->features);
-                    }
-                    return $row->features;
-                })
-                ->addColumn('actions', function ($row) {
-                    return '
-                <a href="' . route('admin.plans.edit', $row->id) . '" class="btn btn-sm btn-primary">Edit</a>
-                <form action="' . route('admin.plans.destroy', $row->id) . '" method="POST" style="display:inline;">
-                    ' . csrf_field() . '
-                    ' . method_field('DELETE') . '
-                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                </form>
-            ';
-                })
-                ->rawColumns(['actions'])
-                ->make(true);
-        }
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+{
+    abort_if(!auth()->user()->can('access plans'), 403);
 
-        $plans = Plan::all();
+    if ($request->ajax()) {
+        $query = Plan::query();
 
-        return view('admin.plans.index', compact('plans'));
+        $datatables = DataTables::eloquent($query)
+            ->addColumn('ai_enabled', function ($plan) {
+                return $plan->ai_enabled ? 'Yes' : 'No';
+            })
+            ->addColumn('features', function ($plan) {
+                if (is_array($plan->features)) {
+                    return implode(", ", $plan->features);
+                }
+                return $plan->features;
+            })
+            ->addColumn('created_at_blade', function ($plan) {
+                return view('admin.plans.datatableColumns.created_at_blade', compact('plan'));
+            })
+            ->addColumn('actions', function ($plan) {
+                return view('admin.plans.datatableColumns.actions', compact('plan'));
+            });
+
+        return $datatables->make(true);
     }
 
+    return view('admin.plans.index');
+}
 
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
+        abort_if(!auth()->user()->can('create plans'), 403);
+
         return view('admin.plans.create');
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StorePlanRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'max_templates' => 'required|integer',
-            'ai_enabled' => 'required|boolean',
-            'price' => 'required|numeric',
-            'features' => 'nullable|string',
-        ]);
-
-        // Convert features string to array
         $features = explode(',', $request->features);
 
-        // Store the plan
-        $plan = Plan::create([
+        Plan::create([
             'name' => $request->name,
             'max_templates' => $request->max_templates,
             'ai_enabled' => $request->ai_enabled,
             'price' => $request->price,
-            'features' => $features
+            'features' => $features,
         ]);
 
-        return redirect()->route('admin.plans.index')->with('success', 'Plan created successfully.');
+        return redirect()->route('admin.plans.index')->with('success', __('plans.messages.created'));
     }
 
-    public function edit($id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Plan $plan)
     {
-        $plan = Plan::findOrFail($id);
+        abort_if(!auth()->user()->can('edit plans'), 403);
+
         return view('admin.plans.edit', compact('plan'));
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdatePlanRequest $request, Plan $plan)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'max_templates' => 'required|integer',
-            'ai_enabled' => 'required|boolean',
-            'price' => 'required|numeric',
-            'features' => 'nullable|string', // Changed back to string for form
-        ]);
-
-        // Convert the string to an array
         $features = explode(',', $request->features);
 
-        $plan = Plan::findOrFail($id);
         $plan->update([
             'name' => $request->name,
             'max_templates' => $request->max_templates,
             'ai_enabled' => $request->ai_enabled,
             'price' => $request->price,
-            'features' => $features
+            'features' => $features,
         ]);
 
-        return redirect()->route('admin.plans.index')->with('success', 'Plan updated successfully.');
+        return redirect()->route('admin.plans.index')->with('success', __('plans.messages.updated'));
     }
 
-    public function destroy($id)
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Plan $plan)
     {
-        $plan = Plan::findOrFail($id);
+        abort_if(!auth()->user()->can('delete plans'), 403);
+
         $plan->delete();
 
-        return redirect()->route('admin.plans.index')->with('success', 'Plan deleted successfully.');
+        return back()->with('success', __('plans.messages.deleted'));
     }
 }
