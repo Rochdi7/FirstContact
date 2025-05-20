@@ -1,12 +1,11 @@
 <x-app-layout>
     {{-- START::breadcrumb and title--}}
-    <x-slot name="toolbar">
-        <x-toolbar title="{{__('plans.title')}}" :breadcrumb="Breadcrumbs::render('plan')">
-            <a href="{{ route('admin.plans.create') }}" class="btn btn-flex btn-primary h-40px fs-7 fw-bold">
-                {{__('plans.create')}}
-            </a>
-        </x-toolbar>
-    </x-slot>
+    <x-toolbar title="{{ __('plans.title') }}" :breadcrumb="Breadcrumbs::render('plan')">
+        <a href="{{ route('admin.plans.create') }}" class="btn btn-flex btn-primary h-40px fs-7 fw-bold">
+            {{ __('plans.create') }}
+        </a>
+    </x-toolbar>
+
     {{-- END::breadcrumb and title--}}
 
     <!--begin::Card-->
@@ -16,14 +15,14 @@
 
         <!--begin::Card body-->
         <div class="card-body">
-           @include('admin.plans.datatable')
+            @include('admin.plans.datatable')
         </div>
         <!--end::Card body-->
     </div>
     <!--end::Card-->
 
     @push('styles')
-        <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css"/>
+        <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
     @endpush
 
     @push('scripts')
@@ -44,12 +43,12 @@
                     "autoWidth": false,
                     ajax: "{{ route('admin.plans.index') }}",
                     columns: [
-                        {data: 'name', name: 'name', className: 'text-start'},
-                        {data: 'max_templates', name: 'max_templates', className: 'text-start'},
-                        {data: 'ai_enabled', name: 'ai_enabled', className: 'text-start'},
-                        {data: 'price', name: 'price', className: 'text-start'},
-                        {data: 'created_at_blade', name: 'created_at', className: 'text-start'},
-                        {data: 'actions', orderable: false, className: 'text-end'},
+                        { data: 'name', name: 'name', className: 'text-start' },
+                        { data: 'max_templates', name: 'max_templates', className: 'text-start' },
+                        { data: 'ai_enabled', name: 'ai_enabled', className: 'text-start' },
+                        { data: 'price', name: 'price', className: 'text-start' },
+                        { data: 'created_at_blade', name: 'created_at', className: 'text-start' },
+                        { data: 'actions', orderable: false, className: 'text-end' },
                     ],
                     order: [[0, 'desc']],
                     initComplete: function () {
