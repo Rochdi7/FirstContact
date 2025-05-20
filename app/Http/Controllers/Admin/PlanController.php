@@ -15,34 +15,34 @@ class PlanController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    abort_if(!auth()->user()->can('access plans'), 403);
+    {
+        abort_if(!auth()->user()->can('access plans'), 403);
 
-    if ($request->ajax()) {
-        $query = Plan::query();
+        if ($request->ajax()) {
+            $query = Plan::query();
 
-        $datatables = DataTables::eloquent($query)
-            ->addColumn('ai_enabled', function ($plan) {
-                return $plan->ai_enabled ? 'Yes' : 'No';
-            })
-            ->addColumn('features', function ($plan) {
-                if (is_array($plan->features)) {
-                    return implode(", ", $plan->features);
-                }
-                return $plan->features;
-            })
-            ->addColumn('created_at_blade', function ($plan) {
-                return view('admin.plans.datatableColumns.created_at_blade', compact('plan'));
-            })
-            ->addColumn('actions', function ($plan) {
-                return view('admin.plans.datatableColumns.actions', compact('plan'));
-            });
+            $datatables = DataTables::eloquent($query)
+                ->addColumn('ai_enabled', function ($plan) {
+                    return $plan->ai_enabled ? 'Yes' : 'No';
+                })
+                ->addColumn('features', function ($plan) {
+                    if (is_array($plan->features)) {
+                        return implode(", ", $plan->features);
+                    }
+                    return $plan->features;
+                })
+                ->addColumn('created_at_blade', function ($plan) {
+                    return view('admin.plans.datatableColumns.created_at_blade', compact('plan'));
+                })
+                ->addColumn('actions', function ($plan) {
+                    return view('admin.plans.datatableColumns.actions', compact('plan'));
+                });
 
-        return $datatables->make(true);
+            return $datatables->make(true);
+        }
+
+        return view('admin.plans.index');
     }
-
-    return view('admin.plans.index');
-}
 
 
     /**
@@ -60,7 +60,14 @@ class PlanController extends Controller
      */
     public function store(StorePlanRequest $request)
     {
-        $features = explode(',', $request->features);
+        $features = [];
+
+        if ($request->filled('features')) {
+            $decoded = json_decode($request->input('features'), true);
+            if (is_array($decoded)) {
+                $features = array_map(fn($item) => $item['value'], $decoded);
+            }
+        }
 
         Plan::create([
             'name' => $request->name,
@@ -88,7 +95,14 @@ class PlanController extends Controller
      */
     public function update(UpdatePlanRequest $request, Plan $plan)
     {
-        $features = explode(',', $request->features);
+        $features = [];
+
+        if ($request->filled('features')) {
+            $decoded = json_decode($request->input('features'), true);
+            if (is_array($decoded)) {
+                $features = array_map(fn($item) => $item['value'], $decoded);
+            }
+        }
 
         $plan->update([
             'name' => $request->name,
