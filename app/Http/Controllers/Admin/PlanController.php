@@ -7,13 +7,11 @@ use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Yajra\DataTables\Facades\DataTables;
 
 class PlanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         abort_if(!auth()->user()->can('access plans'), 403);
@@ -22,21 +20,23 @@ class PlanController extends Controller
             $query = Plan::query();
 
             $datatables = DataTables::eloquent($query)
-                ->addColumn('ai_enabled', function ($plan) {
-                    return $plan->ai_enabled ? 'Yes' : 'No';
-                })
+                ->addColumn('name', fn($plan) => $plan->name)
+                ->addColumn('ai_enabled', fn($plan) => $plan->ai_enabled ? 'Yes' : 'No')
                 ->addColumn('features', function ($plan) {
-                    if (is_array($plan->features)) {
-                        return implode(", ", $plan->features);
-                    }
-                    return $plan->features;
+                    return is_array($plan->features)
+                        ? implode(', ', $plan->features)
+                        : $plan->features;
                 })
-                ->addColumn('created_at_blade', function ($plan) {
-                    return view('admin.plans.datatableColumns.created_at_blade', compact('plan'));
-                })
-                ->addColumn('actions', function ($plan) {
-                    return view('admin.plans.datatableColumns.actions', compact('plan'));
-                });
+                ->addColumn('created_at_blade', fn($plan) => view('admin.plans.datatableColumns.created_at_blade', compact('plan')))
+                ->addColumn('actions', fn($plan) => view('admin.plans.datatableColumns.actions', compact('plan')));
+
+            $datatables->orderColumn('name', function ($query, $order) {
+                $query->orderByTranslation('name', $order);
+            });
+
+            $datatables->filterColumn('name', function ($query, $keyword) {
+                $query->whereTranslationLike('name', "%{$keyword}%");
+            });
 
             return $datatables->make(true);
         }
@@ -44,10 +44,6 @@ class PlanController extends Controller
         return view('admin.plans.index');
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         abort_if(!auth()->user()->can('create plans'), 403);
@@ -55,34 +51,31 @@ class PlanController extends Controller
         return view('admin.plans.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StorePlanRequest $request)
     {
-        $features = [];
+        $data = $request->only(['max_templates', 'ai_enabled', 'price']);
+        $plan = new Plan($data);
 
-        if ($request->filled('features')) {
-            $decoded = json_decode($request->input('features'), true);
-            if (is_array($decoded)) {
-                $features = array_map(fn($item) => $item['value'], $decoded);
+        foreach (array_keys(LaravelLocalization::getSupportedLocales()) as $locale) {
+            $features = [];
+
+            $featuresJson = $request->input("{$locale}.features");
+            if ($featuresJson) {
+                $decoded = json_decode($featuresJson, true);
+                if (is_array($decoded)) {
+                    $features = array_map(fn($item) => $item['value'], $decoded);
+                }
             }
+
+            $plan->translateOrNew($locale)->name = $request->input("{$locale}.name");
+            $plan->translateOrNew($locale)->features = $features;
         }
 
-        Plan::create([
-            'name' => $request->name,
-            'max_templates' => $request->max_templates,
-            'ai_enabled' => $request->ai_enabled,
-            'price' => $request->price,
-            'features' => $features,
-        ]);
+        $plan->save();
 
         return redirect()->route('admin.plans.index')->with('success', __('plans.messages.created'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Plan $plan)
     {
         abort_if(!auth()->user()->can('edit plans'), 403);
@@ -90,35 +83,31 @@ class PlanController extends Controller
         return view('admin.plans.edit', compact('plan'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePlanRequest $request, Plan $plan)
     {
-        $features = [];
+        $data = $request->only(['max_templates', 'ai_enabled', 'price']);
+        $plan->fill($data);
 
-        if ($request->filled('features')) {
-            $decoded = json_decode($request->input('features'), true);
-            if (is_array($decoded)) {
-                $features = array_map(fn($item) => $item['value'], $decoded);
+        foreach (array_keys(LaravelLocalization::getSupportedLocales()) as $locale) {
+            $features = [];
+
+            $featuresJson = $request->input("{$locale}.features");
+            if ($featuresJson) {
+                $decoded = json_decode($featuresJson, true);
+                if (is_array($decoded)) {
+                    $features = array_map(fn($item) => $item['value'], $decoded);
+                }
             }
+
+            $plan->translateOrNew($locale)->name = $request->input("{$locale}.name");
+            $plan->translateOrNew($locale)->features = $features;
         }
 
-        $plan->update([
-            'name' => $request->name,
-            'max_templates' => $request->max_templates,
-            'ai_enabled' => $request->ai_enabled,
-            'price' => $request->price,
-            'features' => $features,
-        ]);
+        $plan->save();
 
         return redirect()->route('admin.plans.index')->with('success', __('plans.messages.updated'));
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Plan $plan)
     {
         abort_if(!auth()->user()->can('delete plans'), 403);
