@@ -38,7 +38,8 @@ class RolesPermissionsSeeder extends Seeder
             'access settings',
             'create countries', 'edit countries', 'show countries', 'delete countries', 'access countries',
             'create currencies', 'edit currencies', 'show currencies', 'delete currencies', 'access currencies',
-            'create store_types', 'edit store_types', 'show store_types', 'delete store_types', 'access store_types'
+            'create store_types', 'edit store_types', 'show store_types', 'delete store_types', 'access store_types',
+            'create plans', 'edit plans', 'show plans', 'delete plans', 'access plans'
         ];
 
         // Create Permissions and Assign to 'Admin' Role
