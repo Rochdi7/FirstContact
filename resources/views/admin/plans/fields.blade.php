@@ -89,11 +89,6 @@
                 <!--end::Actions-->
 </div>
 
-<!-- Tagify CSS -->
-<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
-
-<!-- Tagify JS -->
-<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll('.tagify-field').forEach(input => {
