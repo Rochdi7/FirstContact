@@ -13,4 +13,6 @@ return [
     'store_types' => 'Store Type',
     'dashboard' => 'Dashboard',
     'logout' => 'Logout',
+    'contacts' => 'Contacts',
+
 ];
