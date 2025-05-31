@@ -158,4 +158,19 @@ Breadcrumbs::for('plan-edit', function (BreadcrumbTrail $trail, $plan) {
 });
 
 
-// Categories
+// Contacts
+Breadcrumbs::for('contacts', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('contacts.title'), route('admin.contacts.index'));
+});
+
+Breadcrumbs::for('contacts-create', function (BreadcrumbTrail $trail) {
+    $trail->parent('contacts');
+    $trail->push(__('contacts.create'), route('admin.contacts.create'));
+});
+
+Breadcrumbs::for('contact-edit', function (BreadcrumbTrail $trail, $contact) {
+    $trail->parent('contacts');
+    $trail->push(__('contacts.edit'), route('admin.contacts.edit', $contact->id));
+});
+

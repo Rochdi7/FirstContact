@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\StoreTypeController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\ContactController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,6 +20,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
+
+    Route::middleware('auth')->prefix('admin')->as('admin.')->group(function () {
+        Route::resource('contacts', ContactController::class);
+    });
 
     Route::middleware('auth')->prefix('profile')->as('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');
