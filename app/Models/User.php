@@ -19,7 +19,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasFactory, Notifiable,HasSlug,InteractsWithMedia,HasRoles;
+    use HasFactory, Notifiable, HasSlug, InteractsWithMedia, HasRoles;
 
     public const GENDER_RADIO = [
         'h' => 'users.fields.male',
@@ -76,7 +76,7 @@ class User extends Authenticatable implements HasMedia
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['first_name', 'last_name'])
@@ -104,9 +104,9 @@ class User extends Authenticatable implements HasMedia
         $file = $this->getMedia('photo')->last();
 
         if ($file) {
-            $file->url = route('profile.showMedia',[$file->uuid]);
-            $file->thumbnail = route('profile.showMedia',[$file->uuid,'thumb']);
-            $file->preview = route('profile.showMedia',[$file->uuid,'preview']);
+            $file->url = route('profile.showMedia', [$file->uuid]);
+            $file->thumbnail = route('profile.showMedia', [$file->uuid, 'thumb']);
+            $file->preview = route('profile.showMedia', [$file->uuid, 'preview']);
         }
 
         return $file;
@@ -121,6 +121,11 @@ class User extends Authenticatable implements HasMedia
     public function setBirthdayAttribute($value)
     {
         $this->attributes['birthday'] = $value ? Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d') : null;
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
     }
 
 }
