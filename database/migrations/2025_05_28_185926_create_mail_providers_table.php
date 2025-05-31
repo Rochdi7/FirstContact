@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('mail_providers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
             $table->string('provider');
             $table->string('account_name');
             $table->json('settings')->nullable();
             $table->timestamps();
         });
+        
         
     }
 

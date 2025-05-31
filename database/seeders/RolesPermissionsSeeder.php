@@ -39,7 +39,8 @@ class RolesPermissionsSeeder extends Seeder
             'create countries', 'edit countries', 'show countries', 'delete countries', 'access countries',
             'create currencies', 'edit currencies', 'show currencies', 'delete currencies', 'access currencies',
             'create store_types', 'edit store_types', 'show store_types', 'delete store_types', 'access store_types',
-            'create plans', 'edit plans', 'show plans', 'delete plans', 'access plans'
+            'create plans', 'edit plans', 'show plans', 'delete plans', 'access plans',
+            'create contacts', 'edit contacts', 'show contacts', 'delete contacts', 'access contacts'
         ];
 
         // Create Permissions and Assign to 'Admin' Role
@@ -72,6 +73,7 @@ class RolesPermissionsSeeder extends Seeder
         $permissions_account_manager = [
             'edit my_profile',
             'create users', 'edit users', 'show users', 'delete users', 'access users',
+            'create contacts', 'edit contacts', 'access contacts'
         ];
 
         // Create Permissions and Assign to 'Account Manager' Role
@@ -104,6 +106,7 @@ class RolesPermissionsSeeder extends Seeder
         // Define Permissions for Customer Support
         $permissions_customer_support = [
             'edit my_profile',
+            'show contacts', 'access contacts'
         ];
 
         // Create Permissions and Assign to 'Customer Support' Role
@@ -116,6 +119,7 @@ class RolesPermissionsSeeder extends Seeder
         $customer_support->assignRole($role_customer_support);
 
         // END  ########### Customer Support ##############
+
 
         // START  ########### CUSTOMER ##############
 
