@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\StoreTypeController;
 use App\Http\Controllers\Admin\PlanController;
-use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Contact\ContactController;
 
 Route::get('/', function () {
     return view('welcome');
