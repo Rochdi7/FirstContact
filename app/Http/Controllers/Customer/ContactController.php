@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Contact;
+namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
@@ -28,20 +28,20 @@ class ContactController extends Controller
                 ->addColumn('company', fn($contact) => $contact->company)
                 ->addColumn(
                     'created_at_blade',
-                    fn($contact) => view('admin.contacts.datatableColumns.created_at_blade', compact('contact'))
+                    fn($contact) => view('customer.contacts.datatableColumns.created_at_blade', compact('contact'))
                 )
-                ->addColumn('actions', fn($contact) => view('admin.contacts.datatableColumns.actions', compact('contact')));
+                ->addColumn('actions', fn($contact) => view('customer.contacts.datatableColumns.actions', compact('contact')));
 
             return $datatables->make(true);
         }
 
-        return view('admin.contacts.index');
+        return view('customer.contacts.index');
     }
 
     public function create()
     {
         $this->authorize('create', Contact::class);
-        return view('admin.contacts.create');
+        return view('customer.contacts.create');
     }
 
     public function store(StoreContactRequest $request)
@@ -51,13 +51,13 @@ class ContactController extends Controller
 
         Contact::create($validated);
 
-        return redirect()->route('admin.contacts.index')->with('success', __('contacts.messages.created'));
+        return redirect()->route('customer.contacts.index')->with('success', __('contacts.messages.created'));
     }
 
     public function edit(Contact $contact)
     {
         $this->authorize('update', $contact);
-        return view('admin.contacts.edit', compact('contact'));
+        return view('customer.contacts.edit', compact('contact'));
     }
 
     public function update(UpdateContactRequest $request, Contact $contact)
@@ -65,13 +65,13 @@ class ContactController extends Controller
         $this->authorize('update', $contact);
         $contact->update($request->validated());
 
-        return redirect()->route('admin.contacts.index')->with('success', __('contacts.messages.updated'));
+        return redirect()->route('customer.contacts.index')->with('success', __('contacts.messages.updated'));
     }
 
     public function show(Contact $contact)
     {
         $this->authorize('view', $contact);
-        return view('admin.contacts.show', compact('contact'));
+        return view('customer.contacts.show', compact('contact'));
     }
 
     public function destroy(Contact $contact)
