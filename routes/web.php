@@ -10,18 +10,19 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\StoreTypeController;
 use App\Http\Controllers\Admin\PlanController;
-use App\Http\Controllers\Contact\ContactController;
+use App\Http\Controllers\Customer\ContactController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 
-    Route::middleware('auth')->prefix('admin')->as('admin.')->group(function () {
+    Route::middleware('auth')->prefix('customer')->as('customer.')->group(function () {
         Route::resource('contacts', ContactController::class);
     });
 
@@ -29,6 +30,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');
         Route::patch('/', [ProfileController::class, 'update'])->name('update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+
         // START MEDIA
         Route::post('/media', [ProfileController::class, 'storeMedia'])->name('storeMedia');
         Route::get('/media/{media_uuid}/{size?}', [ProfileController::class, 'showMedia'])->name('showMedia');
@@ -49,10 +51,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         // Countries
         Route::resource('countries', CountryController::class);
 
-        // currencies
+        // Currencies
         Route::resource('currencies', CurrencyController::class);
 
-        // store Types
+        // Store Types
         Route::resource('store_types', StoreTypeController::class);
 
         // Plans
@@ -60,6 +62,4 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     });
 
     require __DIR__ . '/auth.php';
-
 });
-
