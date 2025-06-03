@@ -32,15 +32,47 @@ class RolesPermissionsSeeder extends Seeder
         // Define Permissions for Admin
         $admin_permissions = [
             'edit my_profile',
-            'create users', 'edit users', 'show users', 'delete users', 'access users',
-            'create roles', 'edit roles', 'show roles', 'delete roles', 'access roles',
-            'create permissions', 'edit permissions', 'show permissions', 'delete permissions', 'access permissions',
+            'create users',
+            'edit users',
+            'show users',
+            'delete users',
+            'access users',
+            'create roles',
+            'edit roles',
+            'show roles',
+            'delete roles',
+            'access roles',
+            'create permissions',
+            'edit permissions',
+            'show permissions',
+            'delete permissions',
+            'access permissions',
             'access settings',
-            'create countries', 'edit countries', 'show countries', 'delete countries', 'access countries',
-            'create currencies', 'edit currencies', 'show currencies', 'delete currencies', 'access currencies',
-            'create store_types', 'edit store_types', 'show store_types', 'delete store_types', 'access store_types',
-            'create plans', 'edit plans', 'show plans', 'delete plans', 'access plans',
-            'create contacts', 'edit contacts', 'show contacts', 'delete contacts', 'access contacts'
+            'create countries',
+            'edit countries',
+            'show countries',
+            'delete countries',
+            'access countries',
+            'create currencies',
+            'edit currencies',
+            'show currencies',
+            'delete currencies',
+            'access currencies',
+            'create store_types',
+            'edit store_types',
+            'show store_types',
+            'delete store_types',
+            'access store_types',
+            'create plans',
+            'edit plans',
+            'show plans',
+            'delete plans',
+            'access plans',
+            'create contacts',
+            'edit contacts',
+            'show contacts',
+            'delete contacts',
+            'access contacts'
         ];
 
         // Create Permissions and Assign to 'Admin' Role
@@ -73,8 +105,14 @@ class RolesPermissionsSeeder extends Seeder
         // Define Permissions for Account Manager
         $permissions_account_manager = [
             'edit my_profile',
-            'create users', 'edit users', 'show users', 'delete users', 'access users',
-            'create contacts', 'edit contacts', 'access contacts'
+            'create users',
+            'edit users',
+            'show users',
+            'delete users',
+            'access users',
+            'create contacts',
+            'edit contacts',
+            'access contacts'
         ];
 
         // Create Permissions and Assign to 'Account Manager' Role
@@ -108,7 +146,8 @@ class RolesPermissionsSeeder extends Seeder
         // Define Permissions for Customer Support
         $permissions_customer_support = [
             'edit my_profile',
-            'show contacts', 'access contacts'
+            'edit contacts',
+            'show contacts'
         ];
 
         // Create Permissions and Assign to 'Customer Support' Role
@@ -143,6 +182,10 @@ class RolesPermissionsSeeder extends Seeder
         // Define Permissions for Store Manager
         $permissions_store_manager = [
             'edit my_profile',
+            'create contacts',
+            'edit contacts',
+            'delete contacts',
+            'show contacts'
         ];
 
         // Create Permissions and Assign to 'Store Manager' Role
