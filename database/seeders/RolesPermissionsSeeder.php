@@ -60,6 +60,7 @@ class RolesPermissionsSeeder extends Seeder
             'first_name' => 'Account',
             'last_name' => 'Manager',
             'email' => 'AccountManager@devaga.com',
+            'approved' => 1,
             'password' => Hash::make('password')
         ]);
 
@@ -94,6 +95,7 @@ class RolesPermissionsSeeder extends Seeder
             'first_name' => 'Customer',
             'last_name' => 'Support',
             'email' => 'CustomerSupport@devaga.com',
+            'approved' => 1,
             'password' => Hash::make('password')
         ]);
 
@@ -128,6 +130,7 @@ class RolesPermissionsSeeder extends Seeder
             'first_name' => 'Customer',
             'last_name' => 'Customer',
             'email' => 'Customer@devaga.com',
+            'approved' => 1,
             'password' => Hash::make('password')
         ]);
 
