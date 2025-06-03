@@ -3,7 +3,7 @@
     {{-- START::breadcrumb and title --}}
     <x-slot name="toolbar">
         <x-toolbar title="{{ __('contacts.title') }}" :breadcrumb="Breadcrumbs::render('contacts-create')">
-            <a href="{{ route('admin.contacts.index') }}"
+            <a href="{{ route('customer.contacts.index') }}"
                class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold">
                 {{ __('buttons.back') }}
             </a>
@@ -20,11 +20,11 @@
             </div>
 
             <!--begin::Form-->
-            <form method="POST" action="{{ route('admin.contacts.store') }}" class="form-contact">
+            <form method="POST" action="{{ route('customer.contacts.store') }}" class="form-contact">
                 @csrf
 
                 {{-- Form Fields --}}
-                @include('admin.contacts.fields')
+                @include('customer.contacts.fields')
 
             </form>
             <!--end::Form-->

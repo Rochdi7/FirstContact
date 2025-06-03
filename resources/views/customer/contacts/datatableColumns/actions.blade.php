@@ -6,7 +6,7 @@
 
     @can('show contacts')
         <li>
-            <a href="{{ route('admin.contacts.show', $contact->id) }}"
+            <a href="{{ route('customer.contacts.show', $contact->id) }}"
                class="dropdown-item btn btn-sm btn-active-icon-dark btn-text-dark">
                 <i class="ki-duotone ki-book-square fs-3">
                     <span class="path1"></span>
@@ -20,7 +20,7 @@
 
     @can('edit contacts')
         <li>
-            <a href="{{ route('admin.contacts.edit', $contact->id) }}"
+            <a href="{{ route('customer.contacts.edit', $contact->id) }}"
                class="dropdown-item btn btn-sm btn-active-icon-dark btn-text-dark">
                 <i class="ki-duotone ki-notepad-edit fs-3">
                     <span class="path1"></span>
@@ -33,7 +33,7 @@
 
     @can('delete contacts')
         <li>
-            <form action="{{ route('admin.contacts.destroy', $contact->id) }}" method="POST"
+            <form action="{{ route('customer.contacts.destroy', $contact->id) }}" method="POST"
                   onsubmit="return confirm('{{ __('messages.confirm_delete') }}');">
                 @csrf
                 @method('DELETE')

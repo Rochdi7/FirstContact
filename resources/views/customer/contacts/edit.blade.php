@@ -3,7 +3,7 @@
     {{-- START::breadcrumb and title--}}
     <x-slot name="toolbar">
         <x-toolbar title="{{ __('contacts.title') }}" :breadcrumb="Breadcrumbs::render('contact-edit', $contact)">
-            <a href="{{ route('admin.contacts.index') }}"
+            <a href="{{ route('customer.contacts.index') }}"
                class="btn btn-flex btn-outline btn-color-gray-700 btn-active-color-primary bg-body h-40px fs-7 fw-bold">
                 {{ __('buttons.back') }}
             </a>
@@ -21,10 +21,10 @@
                 <!--end::Title-->
             </div>
             <!--begin::Form-->
-            <form method="POST" class="form-contact" action="{{ route('admin.contacts.update', $contact->id) }}">
+            <form method="POST" class="form-contact" action="{{ route('customer.contacts.update', $contact->id) }}">
                 @method('PUT')
                 @csrf
-                @include('admin.contacts.fields', ['contact' => $contact])
+                @include('customer.contacts.fields', ['contact' => $contact])
             </form>
             <!--end::Form-->
         </div>

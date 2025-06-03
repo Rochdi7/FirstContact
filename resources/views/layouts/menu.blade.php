@@ -69,8 +69,8 @@
         @can('access contacts')
             <!--begin:Contacts-->
             <div class="menu-item">
-                <a class="menu-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}"
-                    href="{{ route('admin.contacts.index') }}">
+                <a class="menu-link {{ request()->routeIs('customer.contacts.*') ? 'active' : '' }}"
+                    href="{{ route('customer.contacts.index') }}">
                     <span class="menu-icon">
                         <i class="ki-outline ki-phone fs-2"></i>
                     </span>

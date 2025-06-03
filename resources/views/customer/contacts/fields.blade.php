@@ -67,7 +67,7 @@
 
 <!--begin::Actions-->
 <div class="text-start pt-10">
-    <a href="{{ route('admin.contacts.index') }}" type="reset"
+    <a href="{{ route('customer.contacts.index') }}" type="reset"
        class="btn btn-light me-3" data-kt-users-modal-action="cancel">
         {{ __('buttons.cancel') }}
     </a>

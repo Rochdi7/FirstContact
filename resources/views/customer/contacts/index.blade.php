@@ -1,7 +1,7 @@
 <x-app-layout>
     {{-- START::breadcrumb and title--}}
     <x-toolbar title="{{ __('contacts.title') }}" :breadcrumb="Breadcrumbs::render('contacts')">
-        <a href="{{ route('admin.contacts.create') }}" class="btn btn-flex btn-primary h-40px fs-7 fw-bold">
+        <a href="{{ route('customer.contacts.create') }}" class="btn btn-flex btn-primary h-40px fs-7 fw-bold">
             {{ __('contacts.create') }}
         </a>
     </x-toolbar>
@@ -10,11 +10,11 @@
     <!--begin::Card-->
     <div class="card">
 
-        @include("admin.contacts.form-search")
+        @include("customer.contacts.form-search")
 
         <!--begin::Card body-->
         <div class="card-body">
-            @include('admin.contacts.datatable')
+            @include('customer.contacts.datatable')
         </div>
         <!--end::Card body-->
     </div>
@@ -40,7 +40,7 @@
                     },
                     "direction": isArabic ? "rtl" : "ltr",
                     "autoWidth": false,
-                    ajax: "{{ route('admin.contacts.index') }}",
+                    ajax: "{{ route('customer.contacts.index') }}",
                     columns: [
                         { data: 'first_name', name: 'first_name', className: 'text-start' },
                         { data: 'last_name', name: 'last_name', className: 'text-start' },
