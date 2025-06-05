@@ -146,7 +146,7 @@ class RolesPermissionsSeeder extends Seeder
         // Define Permissions for Customer Support
         $permissions_customer_support = [
             'edit my_profile',
-            
+
         ];
 
         // Create Permissions and Assign to 'Customer Support' Role
@@ -185,7 +185,12 @@ class RolesPermissionsSeeder extends Seeder
             'edit contacts',
             'show contacts',
             'delete contacts',
-            'access contacts'
+            'access contacts',
+            'create mail_providers',
+            'edit mail_providers',
+            'show mail_providers',
+            'delete mail_providers',
+            'access mail_providers'
         ];
 
         // Create Permissions and Assign to 'Store Manager' Role
