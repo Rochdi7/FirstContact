@@ -4,68 +4,65 @@ namespace App\Policies;
 
 use App\Models\MailProvider;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MailProviderPolicy
 {
+    use HandlesAuthorization;
+
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user can view any mail providers.
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Determine whether the user can view a specific mail provider.
      */
     public function view(User $user, MailProvider $mailProvider): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, MailProvider $mailProvider): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, MailProvider $mailProvider): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, MailProvider $mailProvider): bool
-    {
-        return false;
-    }
-    public function edit(\App\Models\User $user, \App\Models\MailProvider $mailProvider): bool
     {
         return $user->id === $mailProvider->user_id;
     }
 
+    /**
+     * Determine whether the user can create a mail provider.
+     */
+    public function create(User $user): bool
+    {
+        return true;
+    }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can update a mail provider.
+     */
+    public function update(User $user, MailProvider $mailProvider): bool
+    {
+        return $user->id === $mailProvider->user_id;
+    }
+
+    /**
+     * Determine whether the user can delete a mail provider.
+     */
+    public function delete(User $user, MailProvider $mailProvider): bool
+    {
+        return $user->id === $mailProvider->user_id;
+    }
+
+    /**
+     * Determine whether the user can restore a deleted mail provider.
+     */
+    public function restore(User $user, MailProvider $mailProvider): bool
+    {
+        return $user->id === $mailProvider->user_id;
+    }
+
+    /**
+     * Determine whether the user can permanently delete a mail provider.
      */
     public function forceDelete(User $user, MailProvider $mailProvider): bool
     {
-        return false;
+        return $user->id === $mailProvider->user_id;
     }
 }
