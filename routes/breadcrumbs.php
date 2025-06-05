@@ -174,3 +174,21 @@ Breadcrumbs::for('contact-edit', function (BreadcrumbTrail $trail, $contact) {
     $trail->push(__('contacts.edit'), route('customer.contacts.edit', $contact->id));
 });
 
+
+// Mail Providers
+Breadcrumbs::for('mail_providers', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('mail_providers.title'), route('customer.mail_providers.index'));
+});
+
+Breadcrumbs::for('mail_providers-create', function ($trail) {
+    $trail->parent('mail_providers');
+    $trail->push(__('mail_providers.create'), route('customer.mail_providers.create'));
+});
+
+
+Breadcrumbs::for('mail_providers-edit', function (BreadcrumbTrail $trail, $mailProvider) {
+    $trail->parent('mail_providers');
+    $trail->push(__('mail_providers.edit'), route('customer.mail_providers.edit', $mailProvider->id));
+});
+

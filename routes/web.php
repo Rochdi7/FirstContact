@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\StoreTypeController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Customer\ContactController;
+use App\Http\Controllers\Customer\MailProviderController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +26,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
     Route::middleware('auth')->prefix('customer')->as('customer.')->group(function () {
         Route::resource('contacts', ContactController::class);
+        Route::resource('mail_providers', MailProviderController::class);
     });
 
     Route::middleware('auth')->prefix('profile')->as('profile.')->group(function () {
@@ -42,8 +45,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         // Role management
         Route::resource('roles', RoleController::class);
+
         // Permission management
         Route::resource('permissions', PermissionController::class);
+
         // User management
         Route::resource('users', UsersController::class)->parameters(['users' => 'user:slug']);
         Route::put('/users/{user:slug}/update-password', [UsersController::class, 'updatePassword'])->name('users.update-password');
