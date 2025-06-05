@@ -14,5 +14,6 @@ return [
     'dashboard' => 'Dashboard',
     'logout' => 'Logout',
     'contacts' => 'Contacts',
+    'mail_providers' => 'Mail Providers',
 
 ];
