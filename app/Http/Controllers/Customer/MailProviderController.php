@@ -3,29 +3,37 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMailProviderRequest;
 use App\Models\MailProvider;
-use App\Services\MailProviders\MailProviderFactory;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreMailProviderRequest;
+use App\Http\Requests\UpdateMailProviderRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Yajra\DataTables\Facades\DataTables;
+use App\Services\MailProviders\MailProviderFactory;
 
 class MailProviderController extends Controller
-
 {
     use AuthorizesRequests;
-    /**
-     * Display a listing of the mail providers.
-     */
-    public function index()
-    {
-        if (request()->ajax()) {
-            $data = MailProvider::where('user_id', Auth::id())->get();
 
-            return datatables()->of($data)
-                ->addColumn('created_at_blade', fn($row) => view('customer.mail_providers.datatableColumns.created_at_blade', compact('row')))
-                ->addColumn('actions', fn($row) => view('customer.mail_providers.datatableColumns.actions', ['mail_provider' => $row]))
+    public function index(Request $request)
+    {
+        $this->authorize('viewAny', MailProvider::class);
+
+        if ($request->ajax()) {
+            $query = MailProvider::where('user_id', auth()->id());
+
+            return DataTables::eloquent($query)
+                ->addColumn('provider', fn($row) => $row->provider)
+                ->addColumn('account_name', fn($row) => $row->account_name)
+                ->addColumn('email', fn($row) => $row->settings['email'] ?? '')
+                ->addColumn('created_at_blade', fn($row) =>
+                    view('customer.mail_providers.datatableColumns.created_at_blade', compact('row'))
+                )
+                ->addColumn('actions', fn($row) =>
+                    view('customer.mail_providers.datatableColumns.actions', ['mail_provider' => $row])
+                )
                 ->rawColumns(['created_at_blade', 'actions'])
                 ->make(true);
         }
@@ -33,23 +41,19 @@ class MailProviderController extends Controller
         return view('customer.mail_providers.index');
     }
 
-    /**
-     * Show the form for creating a new mail provider.
-     */
     public function create()
     {
+        $this->authorize('create', MailProvider::class);
         return view('customer.mail_providers.create');
     }
 
-    /**
-     * Store a newly created mail provider in storage.
-     */
     public function store(StoreMailProviderRequest $request)
     {
         $validated = $request->validated();
+        $validated['user_id'] = auth()->id();
 
         MailProvider::create([
-            'user_id' => Auth::id(),
+            'user_id' => $validated['user_id'],
             'provider' => $validated['provider'],
             'account_name' => $validated['account_name'],
             'settings' => [
@@ -62,23 +66,17 @@ class MailProviderController extends Controller
             ->with('success', __('mail_providers.messages.created'));
     }
 
-    /**
-     * Show the form for editing the specified mail provider.
-     */
     public function edit(MailProvider $mailProvider)
     {
-        $this->authorize('edit', $mailProvider);
-
+        $this->authorize('update', $mailProvider);
         return view('customer.mail_providers.edit', compact('mailProvider'));
     }
 
-    /**
-     * Update the specified mail provider in storage.
-     */
-    public function update(StoreMailProviderRequest $request, MailProvider $mailProvider)
+    public function update(UpdateMailProviderRequest $request, MailProvider $mailProvider)
     {
-        $validated = $request->validated();
+        $this->authorize('update', $mailProvider);
 
+        $validated = $request->validated();
         $settings = $mailProvider->settings;
         $settings['email'] = $validated['email'];
 
@@ -96,35 +94,36 @@ class MailProviderController extends Controller
             ->with('success', __('mail_providers.messages.updated'));
     }
 
-    /**
-     * Remove the specified mail provider.
-     */
+    public function show(MailProvider $mailProvider)
+    {
+        $this->authorize('view', $mailProvider);
+        return view('customer.mail_providers.show', compact('mailProvider'));
+    }
+
     public function destroy(MailProvider $mailProvider)
     {
+        $this->authorize('delete', $mailProvider);
         $mailProvider->delete();
 
         return redirect()->route('customer.mail_providers.index')
             ->with('success', __('mail_providers.messages.deleted'));
     }
 
-    /**
-     * Send a test email using the selected provider.
-     */
     public function test(int $id)
     {
-        $provider = MailProvider::where('user_id', Auth::id())->findOrFail($id);
+        $mailProvider = MailProvider::where('user_id', auth()->id())->findOrFail($id);
+        $this->authorize('view', $mailProvider);
 
         try {
-            $settings = $provider->settings;
+            $settings = $mailProvider->settings;
             $settings['password'] = Crypt::decrypt($settings['password']);
-            $provider->settings = $settings;
+            $mailProvider->settings = $settings;
 
-            $mailer = MailProviderFactory::create($provider);
-
+            $mailer = MailProviderFactory::create($mailProvider);
             $mailer->sendEmail(
-                Auth::user()->email,
+                auth()->user()->email,
                 'Test Email from ' . config('app.name'),
-                '<h1>This is a test email</h1><p>Your ' . $provider->provider . ' configuration works 🎉</p>'
+                '<h1>This is a test email</h1><p>Your ' . $mailProvider->provider . ' configuration works 🎉</p>'
             );
 
             return response()->json([
