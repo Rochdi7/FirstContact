@@ -10,9 +10,9 @@
         @can('access users')
             <!--begin:User Management-->
             <div data-kt-menu-trigger="click" class="menu-item {{ (request()->routeIs("admin.users.*")
-                || request()->routeIs("admin.roles.*")
-                || request()->routeIs("admin.permissions.*")
-                || request()->routeIs("admin.plans.*")) ? "here show " : "" }} menu-accordion">
+            || request()->routeIs("admin.roles.*")
+            || request()->routeIs("admin.permissions.*")
+            || request()->routeIs("admin.plans.*")) ? "here show " : "" }} menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <i class="ki-outline ki-category fs-2"></i>
@@ -25,9 +25,9 @@
                     @can('access users')
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs("admin.users.*") ? "active" : "" }}"
-                                href="{{route('admin.users.index')}}">
+                                href="{{ route('admin.users.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">{{__('menu.users')}}</span>
+                                <span class="menu-title">{{ __('menu.users') }}</span>
                             </a>
                         </div>
                     @endcan
@@ -35,9 +35,9 @@
                     @can('access permissions')
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs("admin.permissions.*") ? "active" : "" }}"
-                                href="{{route('admin.permissions.index')}}">
+                                href="{{ route('admin.permissions.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">{{__('menu.permissions')}}</span>
+                                <span class="menu-title">{{ __('menu.permissions') }}</span>
                             </a>
                         </div>
                     @endcan
@@ -47,7 +47,7 @@
                             <a class="menu-link {{ request()->routeIs('admin.roles.*') ? 'active' : '' }}"
                                 href="{{ route('admin.roles.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">{{__('menu.roles')}}</span>
+                                <span class="menu-title">{{ __('menu.roles') }}</span>
                             </a>
                         </div>
                     @endcan
@@ -55,9 +55,9 @@
                     @can('access plans')
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs("admin.plans.*") ? "active" : "" }}"
-                                href="{{route('admin.plans.index')}}">
+                                href="{{ route('admin.plans.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">{{__('menu.plans')}}</span>
+                                <span class="menu-title">{{ __('menu.plans') }}</span>
                             </a>
                         </div>
                     @endcan
@@ -80,12 +80,26 @@
             <!--end:Contacts-->
         @endcan
 
+        @can('access mail_providers')
+            <!--begin:Mail Providers-->
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('customer.mail_providers.*') ? 'active' : '' }}"
+                    href="{{ route('customer.mail_providers.index') }}">
+                    <span class="menu-icon">
+                        <i class="ki-outline ki-send fs-2"></i>
+                    </span>
+                    <span class="menu-title">{{ __('menu.mail_providers') }}</span>
+                </a>
+            </div>
+            <!--end:Mail Providers-->
+        @endcan
+
+
         @can('access settings')
             <!--begin:Settings-->
-            <div data-kt-menu-trigger="click"
-                class="menu-item {{ (request()->routeIs("admin.countries.*")
-                || request()->routeIs("admin.currencies.*")
-                || request()->routeIs("admin.store_types.*")) ? "here show " : "" }} menu-accordion">
+            <div data-kt-menu-trigger="click" class="menu-item {{ (request()->routeIs("admin.countries.*")
+            || request()->routeIs("admin.currencies.*")
+            || request()->routeIs("admin.store_types.*")) ? "here show " : "" }} menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <i class="ki-outline ki-category fs-2"></i>
@@ -98,9 +112,9 @@
                     @can('access countries')
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs("admin.countries.*") ? "active" : "" }}"
-                                href="{{route('admin.countries.index')}}">
+                                href="{{ route('admin.countries.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">{{__('menu.countries')}}</span>
+                                <span class="menu-title">{{ __('menu.countries') }}</span>
                             </a>
                         </div>
                     @endcan
@@ -108,9 +122,9 @@
                     @can('access currencies')
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs("admin.currencies.*") ? "active" : "" }}"
-                                href="{{route('admin.currencies.index')}}">
+                                href="{{ route('admin.currencies.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">{{__('menu.currencies')}}</span>
+                                <span class="menu-title">{{ __('menu.currencies') }}</span>
                             </a>
                         </div>
                     @endcan
@@ -118,9 +132,9 @@
                     @can('access store_types')
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs("admin.store_types.*") ? "active" : "" }}"
-                                href="{{route('admin.store_types.index')}}">
+                                href="{{ route('admin.store_types.index') }}">
                                 <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                                <span class="menu-title">{{__('menu.store_types')}}</span>
+                                <span class="menu-title">{{ __('menu.store_types') }}</span>
                             </a>
                         </div>
                     @endcan
