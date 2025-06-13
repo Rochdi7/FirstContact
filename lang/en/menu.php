@@ -15,5 +15,6 @@ return [
     'logout' => 'Logout',
     'contacts' => 'Contacts',
     'mail_providers' => 'Mail Providers',
+    'templates' => 'Templates',
 
 ];
