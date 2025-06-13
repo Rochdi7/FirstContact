@@ -72,7 +72,12 @@ class RolesPermissionsSeeder extends Seeder
             'edit contacts',
             'show contacts',
             'delete contacts',
-            'access contacts'
+            'access contacts',
+            'create templates',
+            'edit templates',
+            'show templates',
+            'delete templates',
+            'access templates'
         ];
 
         // Create Permissions and Assign to 'Admin' Role
