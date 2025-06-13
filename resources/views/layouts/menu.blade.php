@@ -12,7 +12,8 @@
             <div data-kt-menu-trigger="click" class="menu-item {{ (request()->routeIs("admin.users.*")
             || request()->routeIs("admin.roles.*")
             || request()->routeIs("admin.permissions.*")
-            || request()->routeIs("admin.plans.*")) ? "here show " : "" }} menu-accordion">
+            || request()->routeIs("admin.plans.*")
+            || request()->routeIs("admin.templates.*")) ? "here show " : "" }} menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <i class="ki-outline ki-category fs-2"></i>
@@ -61,6 +62,16 @@
                             </a>
                         </div>
                     @endcan
+
+                    @can('access templates')
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs("admin.templates.*") ? "active" : "" }}"
+                                href="{{ route('admin.templates.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">{{ __('menu.templates') }}</span>
+                            </a>
+                        </div>
+                    @endcan
                 </div>
             </div>
             <!--end:User Management-->
@@ -93,7 +104,6 @@
             </div>
             <!--end:Mail Providers-->
         @endcan
-
 
         @can('access settings')
             <!--begin:Settings-->
