@@ -12,7 +12,8 @@ use App\Http\Controllers\Admin\StoreTypeController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Customer\ContactController;
 use App\Http\Controllers\Customer\MailProviderController;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Http\Controllers\Admin\TemplateController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;  
 
 Route::get('/', function () {
     return view('welcome');
@@ -64,6 +65,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         // Plans
         Route::resource('plans', PlanController::class);
+
+        // Templates
+        Route::resource('templates', TemplateController::class);
     });
 
     require __DIR__ . '/auth.php';
