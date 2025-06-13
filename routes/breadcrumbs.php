@@ -192,3 +192,18 @@ Breadcrumbs::for('mail_providers-edit', function (BreadcrumbTrail $trail, $mailP
     $trail->push(__('mail_providers.edit'), route('customer.mail_providers.edit', $mailProvider->id));
 });
 
+// Templates
+Breadcrumbs::for('template', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('templates.title'), route('admin.templates.index'));
+});
+
+Breadcrumbs::for('template-create', function (BreadcrumbTrail $trail) {
+    $trail->parent('template');
+    $trail->push(__('templates.create'), route('admin.templates.create'));
+});
+
+Breadcrumbs::for('template-edit', function (BreadcrumbTrail $trail, $template) {
+    $trail->parent('template');
+    $trail->push(__('templates.edit'), route('admin.templates.edit', $template->id));
+});
