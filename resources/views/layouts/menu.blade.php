@@ -7,13 +7,13 @@
     <div class="menu menu-column menu-rounded menu-sub-indention fw-bold px-6" id="#kt_app_sidebar_menu"
         data-kt-menu="true" data-kt-menu-expand="false">
 
+        {{-- ADMIN AREA --}}
         @can('access users')
-            <!--begin:User Management-->
             <div data-kt-menu-trigger="click" class="menu-item {{ (request()->routeIs("admin.users.*")
-            || request()->routeIs("admin.roles.*")
-            || request()->routeIs("admin.permissions.*")
-            || request()->routeIs("admin.plans.*")
-            || request()->routeIs("admin.templates.*")) ? "here show " : "" }} menu-accordion">
+                || request()->routeIs("admin.roles.*")
+                || request()->routeIs("admin.permissions.*")
+                || request()->routeIs("admin.plans.*")
+                || request()->routeIs("admin.templates.*")) ? "here show " : "" }} menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <i class="ki-outline ki-category fs-2"></i>
@@ -74,11 +74,22 @@
                     @endcan
                 </div>
             </div>
-            <!--end:User Management-->
+        @endcan
+
+        {{-- CUSTOMER AREA --}}
+        @can('access message_templates')
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs("customer.message_templates.*") ? "active" : "" }}"
+                    href="{{ route('customer.message_templates.index') }}">
+                    <span class="menu-icon">
+                        <i class="ki-outline ki-file fs-2"></i>
+                    </span>
+                    <span class="menu-title">{{ __('menu.message_templates') }}</span>
+                </a>
+            </div>
         @endcan
 
         @can('access contacts')
-            <!--begin:Contacts-->
             <div class="menu-item">
                 <a class="menu-link {{ request()->routeIs('customer.contacts.*') ? 'active' : '' }}"
                     href="{{ route('customer.contacts.index') }}">
@@ -88,11 +99,9 @@
                     <span class="menu-title">{{ __('menu.contacts') }}</span>
                 </a>
             </div>
-            <!--end:Contacts-->
         @endcan
 
         @can('access mail_providers')
-            <!--begin:Mail Providers-->
             <div class="menu-item">
                 <a class="menu-link {{ request()->routeIs('customer.mail_providers.*') ? 'active' : '' }}"
                     href="{{ route('customer.mail_providers.index') }}">
@@ -102,17 +111,16 @@
                     <span class="menu-title">{{ __('menu.mail_providers') }}</span>
                 </a>
             </div>
-            <!--end:Mail Providers-->
         @endcan
 
+        {{-- SETTINGS --}}
         @can('access settings')
-            <!--begin:Settings-->
             <div data-kt-menu-trigger="click" class="menu-item {{ (request()->routeIs("admin.countries.*")
-            || request()->routeIs("admin.currencies.*")
-            || request()->routeIs("admin.store_types.*")) ? "here show " : "" }} menu-accordion">
+                || request()->routeIs("admin.currencies.*")
+                || request()->routeIs("admin.store_types.*")) ? "here show " : "" }} menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
-                        <i class="ki-outline ki-category fs-2"></i>
+                        <i class="ki-outline ki-setting fs-2"></i>
                     </span>
                     <span class="menu-title">{{ __('menu.menu_settings') }}</span>
                     <span class="menu-arrow"></span>
@@ -150,7 +158,6 @@
                     @endcan
                 </div>
             </div>
-            <!--end:Settings-->
         @endcan
 
     </div>
