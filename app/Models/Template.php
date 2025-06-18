@@ -10,13 +10,15 @@ class Template extends Model
     use HasFactory;
 
     protected $fillable = [
-        'plan_id',
         'name',
         'view_path',
     ];
 
-    public function plan()
+    /**
+     * Many-to-Many relation with Plan.
+     */
+    public function plans()
     {
-        return $this->belongsTo(Plan::class);
+        return $this->belongsToMany(Plan::class, 'plan_template');
     }
 }

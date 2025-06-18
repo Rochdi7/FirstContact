@@ -49,4 +49,12 @@ class Plan extends Model implements TranslatableContract
     {
         return number_format($this->price, 2) . ' $';
     }
+
+    /**
+     * Many-to-Many relation with Template.
+     */
+    public function templates()
+    {
+        return $this->belongsToMany(Template::class, 'plan_template');
+    }
 }

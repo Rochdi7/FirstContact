@@ -2,11 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class MessageTemplate extends Model
 {
-    protected $fillable = ['user_id', 'name', 'subject', 'body'];
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'name',
+        'subject',
+        'body',
+    ];
+
+    /**
+     * Relations
+     */
 
     public function user()
     {
