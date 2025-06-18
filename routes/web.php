@@ -10,10 +10,11 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\StoreTypeController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\TemplateController;
+use App\Http\Controllers\Customer\MessageTemplateController; 
 use App\Http\Controllers\Customer\ContactController;
 use App\Http\Controllers\Customer\MailProviderController;
-use App\Http\Controllers\Admin\TemplateController;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;  
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,11 +26,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 
+    // Customer Routes
     Route::middleware('auth')->prefix('customer')->as('customer.')->group(function () {
         Route::resource('contacts', ContactController::class);
         Route::resource('mail_providers', MailProviderController::class);
+        Route::resource('message_templates', MessageTemplateController::class); 
     });
 
+    // Profile Routes
     Route::middleware('auth')->prefix('profile')->as('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');
         Route::patch('/', [ProfileController::class, 'update'])->name('update');
@@ -41,6 +45,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         // END MEDIA
     });
 
+    // Admin Routes
     Route::middleware('auth')->prefix('admin')->as('admin.')->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -68,6 +73,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         // Templates
         Route::resource('templates', TemplateController::class);
+
+        // Admin Message Templates (désactivé pour le moment)
+        // Route::resource('message_templates', MessageTemplateController::class);
     });
 
     require __DIR__ . '/auth.php';

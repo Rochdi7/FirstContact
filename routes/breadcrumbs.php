@@ -207,3 +207,24 @@ Breadcrumbs::for('template-edit', function (BreadcrumbTrail $trail, $template) {
     $trail->parent('template');
     $trail->push(__('templates.edit'), route('admin.templates.edit', $template->id));
 });
+
+// Customer Message Templates
+Breadcrumbs::for('customer.dashboard', function (BreadcrumbTrail $trail) {
+    $trail->push(__('Dashboard'), route('dashboard'));
+});
+
+Breadcrumbs::for('customer.message_templates.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('customer.dashboard'); // <-- ici le fix
+    $trail->push(__('message_templates.title'), route('customer.message_templates.index'));
+});
+
+Breadcrumbs::for('customer.message_templates.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('customer.message_templates.index');
+    $trail->push(__('message_templates.create'), route('customer.message_templates.create'));
+});
+
+Breadcrumbs::for('customer.message_templates.edit', function (BreadcrumbTrail $trail, $messageTemplate) {
+    $trail->parent('customer.message_templates.index');
+    $trail->push(__('message_templates.edit'), route('customer.message_templates.edit', $messageTemplate->id));
+});
+
