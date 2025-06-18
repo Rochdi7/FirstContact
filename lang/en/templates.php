@@ -18,14 +18,14 @@ return [
 
     'fields' => [
         'name' => 'Template Name',
-        'plan' => 'Plan',
-        'select_plan' => 'Select Plan',
+        'plans' => 'Plans',
+        'select_plans' => 'Select Plans',
         'view_path' => 'View Path',
     ],
 
     'filter' => [
         'name' => 'Filter by name',
-        'plan' => 'Filter by plan',
+        'plans' => 'Filter by plans',
         'view_path' => 'Filter by view path',
     ],
 

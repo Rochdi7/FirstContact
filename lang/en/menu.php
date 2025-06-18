@@ -6,6 +6,10 @@ return [
     'permissions' => 'Permissions',
     'roles' => 'Roles',
     'plans' => 'Plans',
+    'templates' => 'Templates',
+    'message_templates' => 'Message Templates',
+    'contacts' => 'Contacts',
+    'mail_providers' => 'Mail Providers',
     'settings' => 'Settings',
     'menu_settings' => 'Settings',
     'countries' => 'Countries',
@@ -13,8 +17,4 @@ return [
     'store_types' => 'Store Type',
     'dashboard' => 'Dashboard',
     'logout' => 'Logout',
-    'contacts' => 'Contacts',
-    'mail_providers' => 'Mail Providers',
-    'templates' => 'Templates',
-
 ];
