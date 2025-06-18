@@ -43,7 +43,7 @@
                     ajax: "{{ route('admin.templates.index') }}",
                     columns: [
                         { data: 'name', name: 'name', className: 'text-start' },
-                        { data: 'plan', name: 'plan', className: 'text-start' },
+                        { data: 'plans', name: 'plans', className: 'text-start' },
                         { data: 'view_path', name: 'view_path', className: 'text-start' },
                         { data: 'created_at_blade', name: 'created_at', className: 'text-start' },
                         { data: 'actions', orderable: false, className: 'text-end' },
