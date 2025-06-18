@@ -10,8 +10,8 @@ class TemplateSeeder extends Seeder
 {
     public function run(): void
     {
-        // Get plans (make sure plans exist)
-        $defaultPlan = Plan::first(); // You can improve to assign specific plans
+        // Get all available plans (we'll attach all for demo)
+        $plans = Plan::all();
 
         // Templates data
         $templates = [
@@ -33,12 +33,14 @@ class TemplateSeeder extends Seeder
             ],
         ];
 
-        foreach ($templates as $template) {
-            Template::create([
-                'plan_id' => $defaultPlan->id,
-                'name' => $template['name'],
-                'view_path' => $template['view_path'],
+        foreach ($templates as $templateData) {
+            $template = Template::create([
+                'name' => $templateData['name'],
+                'view_path' => $templateData['view_path'],
             ]);
+
+            // Attach plans to template (attach all plans for demo)
+            $template->plans()->attach($plans->pluck('id'));
         }
     }
 }
