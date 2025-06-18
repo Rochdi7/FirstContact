@@ -14,7 +14,8 @@ class UpdateTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'plan_id' => ['required', 'exists:plans,id'],
+            'plan_ids' => ['required', 'array'],
+            'plan_ids.*' => ['exists:plans,id'],
             'name' => ['required', 'string', 'max:255'],
             'view_path' => ['required', 'string', 'max:255'],
         ];

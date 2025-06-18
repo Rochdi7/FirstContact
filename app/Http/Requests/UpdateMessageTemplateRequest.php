@@ -4,20 +4,19 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTemplateRequest extends FormRequest
+class UpdateMessageTemplateRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->user()->can('create templates');
+        return auth()->user()->can('edit message_templates');
     }
 
     public function rules(): array
     {
         return [
-            'plan_ids' => ['required', 'array'],
-            'plan_ids.*' => ['exists:plans,id'],
             'name' => ['required', 'string', 'max:255'],
-            'view_path' => ['required', 'string', 'max:255'],
+            'subject' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string'],
         ];
     }
 }
