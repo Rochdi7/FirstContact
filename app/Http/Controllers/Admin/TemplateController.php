@@ -14,16 +14,19 @@ use Yajra\DataTables\Facades\DataTables;
 class TemplateController extends Controller
 {
     use AuthorizesRequests;
+
     public function index(Request $request)
     {
         $this->authorize('viewAny', Template::class);
 
         if ($request->ajax()) {
-            $query = Template::with('plan');
+            $query = Template::with('plans');
 
             $datatables = DataTables::eloquent($query)
                 ->addColumn('name', fn($template) => $template->name)
-                ->addColumn('plan', fn($template) => optional($template->plan)->name ?? '-')
+                ->addColumn('plans', function($template) {
+                    return $template->plans->pluck('name')->implode(', ');
+                })
                 ->addColumn('view_path', fn($template) => $template->view_path)
                 ->addColumn('created_at_blade', fn($template) => view('admin.templates.datatableColumns.created_at_blade', compact('template')))
                 ->addColumn('actions', fn($template) => view('admin.templates.datatableColumns.actions', compact('template')));
@@ -39,15 +42,21 @@ class TemplateController extends Controller
         $this->authorize('create', Template::class);
 
         $plans = Plan::all();
+        $views = $this->getAvailableViews();
 
-        return view('admin.templates.create', compact('plans'));
+        return view('admin.templates.create', compact('plans', 'views'));
     }
 
     public function store(StoreTemplateRequest $request)
     {
         $this->authorize('create', Template::class);
 
-        Template::create($request->validated());
+        $template = Template::create([
+            'name' => $request->name,
+            'view_path' => $request->view_path,
+        ]);
+
+        $template->plans()->sync($request->input('plan_ids', []));
 
         return redirect()->route('admin.templates.index')->with('success', __('templates.messages.created'));
     }
@@ -57,15 +66,23 @@ class TemplateController extends Controller
         $this->authorize('update', $template);
 
         $plans = Plan::all();
+        $views = $this->getAvailableViews();
 
-        return view('admin.templates.edit', compact('template', 'plans'));
+        $template->load('plans');
+
+        return view('admin.templates.edit', compact('template', 'plans', 'views'));
     }
 
     public function update(UpdateTemplateRequest $request, Template $template)
     {
         $this->authorize('update', $template);
 
-        $template->update($request->validated());
+        $template->update([
+            'name' => $request->name,
+            'view_path' => $request->view_path,
+        ]);
+
+        $template->plans()->sync($request->input('plan_ids', []));
 
         return redirect()->route('admin.templates.index')->with('success', __('templates.messages.updated'));
     }
@@ -77,5 +94,17 @@ class TemplateController extends Controller
         $template->delete();
 
         return back()->with('success', __('templates.messages.deleted'));
+    }
+
+    private function getAvailableViews()
+    {
+        return collect(glob(resource_path('views/templates/*.blade.php')))
+            ->map(function ($path) {
+                return str_replace(
+                    [resource_path('views/'), '.blade.php', '/'],
+                    ['', '', '.'],
+                    $path
+                );
+            });
     }
 }
