@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('templates', function (Blueprint $table) {
+        Schema::create('plan_template', function (Blueprint $table) {
             $table->id();
-
-            // SaaS best practice: link template to the owner user
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
-
-            $table->string('name');
-            $table->string('view_path');
+            $table->foreignId('plan_id')->constrained()->onDelete('cascade');
+            $table->foreignId('template_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('templates');
+        Schema::dropIfExists('plan_template');
     }
 };
