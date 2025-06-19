@@ -27,7 +27,7 @@
         @enderror
     </div>
 
-    <!-- View Path (Select2) -->
+    <!-- View Path -->
     <div class="form-group col-md-12 mb-7">
         <label class="required fw-semibold fs-6 mb-2">{{ __('templates.fields.view_path') }}</label>
         <select name="view_path"
