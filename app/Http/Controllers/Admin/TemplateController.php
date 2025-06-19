@@ -24,7 +24,7 @@ class TemplateController extends Controller
 
             $datatables = DataTables::eloquent($query)
                 ->addColumn('name', fn($template) => $template->name)
-                ->addColumn('plans', function($template) {
+                ->addColumn('plans', function ($template) {
                     return $template->plans->pluck('name')->implode(', ');
                 })
                 ->addColumn('view_path', fn($template) => $template->view_path)
@@ -46,6 +46,7 @@ class TemplateController extends Controller
 
         return view('admin.templates.create', compact('plans', 'views'));
     }
+
 
     public function store(StoreTemplateRequest $request)
     {
