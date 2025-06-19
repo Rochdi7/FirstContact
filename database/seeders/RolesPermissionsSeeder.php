@@ -51,14 +51,9 @@ class RolesPermissionsSeeder extends Seeder
             // Plans
             'create plans', 'edit plans', 'show plans', 'delete plans', 'access plans',
 
-            // Contacts
-            'create contacts', 'edit contacts', 'show contacts', 'delete contacts', 'access contacts',
-
             // Templates
-            'create templates', 'edit templates', 'show templates', 'delete templates', 'access templates',
+            'create templates', 'edit templates', 'show templates', 'delete templates', 'access templates'
 
-            // Message Templates (NEW MODULE)
-            'create message_templates', 'edit message_templates', 'show message_templates', 'delete message_templates', 'access message_templates',
         ];
 
         foreach ($admin_permissions as $permission) {
@@ -146,7 +141,9 @@ class RolesPermissionsSeeder extends Seeder
         $permissions_store_manager = [
             'edit my_profile',
             'create contacts', 'edit contacts', 'show contacts', 'delete contacts', 'access contacts',
-            'create mail_providers', 'edit mail_providers', 'show mail_providers', 'delete mail_providers', 'access mail_providers'
+            'create mail_providers', 'edit mail_providers', 'show mail_providers', 'delete mail_providers', 'access mail_providers',
+            'create message_templates', 'edit message_templates', 'show message_templates', 'delete message_templates', 'access message_templates'
+
         ];
 
         foreach ($permissions_store_manager as $permission) {
