@@ -1,17 +1,21 @@
 <div class="row">
-    <!-- Plan (Select2) -->
+    <!-- Plans (Multiple Select2) -->
     <div class="form-group col-md-6 mb-7">
-        <label class="required fw-semibold fs-6 mb-2">{{ __('templates.fields.plan') }}</label>
-        <select name="plan_id" class="form-select form-select-solid {{ $errors->has('plan_id') ? 'is-invalid' : '' }}"
-            data-control="select2" data-placeholder="{{ __('templates.fields.select_plan') }}" required>
-            <option></option>
+        <label class="required fw-semibold fs-6 mb-2">{{ __('templates.fields.plans') }}</label>
+        <select name="plan_ids[]" class="form-select form-select-solid {{ $errors->has('plan_ids') ? 'is-invalid' : '' }}"
+            data-control="select2"
+            data-placeholder="{{ __('templates.fields.select_plan') }}"
+            data-close-on-select="false"
+            data-allow-clear="true"
+            multiple="multiple" required>
             @foreach($plans as $plan)
-                <option value="{{ $plan->id }}" {{ old('plan_id', $template->plan_id ?? '') == $plan->id ? 'selected' : '' }}>
+                <option value="{{ $plan->id }}"
+                    {{ (isset($template) && $template->plans->contains($plan->id)) ? 'selected' : '' }}>
                     {{ $plan->name }}
                 </option>
             @endforeach
         </select>
-        @error('plan_id')
+        @error('plan_ids')
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
@@ -44,7 +48,6 @@
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
-
 </div>
 
 <!--begin::Actions-->
