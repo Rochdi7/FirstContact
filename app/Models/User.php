@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\CustomResetPassword;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -19,7 +18,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasFactory, Notifiable, HasSlug, InteractsWithMedia, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasSlug, InteractsWithMedia, HasRoles;
 
     public const GENDER_RADIO = [
         'h' => 'users.fields.male',
@@ -50,6 +49,7 @@ class User extends Authenticatable implements HasMedia
     ];
 
     protected $dates = ['birthday', 'last_activity'];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -120,12 +120,13 @@ class User extends Authenticatable implements HasMedia
 
     public function setBirthdayAttribute($value)
     {
-        $this->attributes['birthday'] = $value ? Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d') : null;
+        $this->attributes['birthday'] = $value
+            ? Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d')
+            : null;
     }
 
     public function contacts()
     {
         return $this->hasMany(Contact::class);
     }
-
 }

@@ -19,7 +19,7 @@ return [
     'fields' => [
         'name' => 'Template Name',
         'plans' => 'Plans',
-        'select_plans' => 'Select Plans',
+        'select_plan' => 'Select a Plan',
         'view_path' => 'View Path',
     ],
 
