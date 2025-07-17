@@ -11,9 +11,11 @@ use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\StoreTypeController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\TemplateController;
-use App\Http\Controllers\Customer\MessageTemplateController; 
+use App\Http\Controllers\Customer\MessageTemplateController;
 use App\Http\Controllers\Customer\ContactController;
 use App\Http\Controllers\Customer\MailProviderController;
+use App\Http\Controllers\Customer\TemplateController as CustomerTemplateController;
+use App\Http\Controllers\Customer\MessageController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::get('/', function () {
@@ -30,7 +32,22 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::middleware('auth')->prefix('customer')->as('customer.')->group(function () {
         Route::resource('contacts', ContactController::class);
         Route::resource('mail_providers', MailProviderController::class);
-        Route::resource('message_templates', MessageTemplateController::class); 
+        Route::resource('message_templates', MessageTemplateController::class);
+
+        Route::resource('templates', CustomerTemplateController::class)
+            ->only(['index', 'show']);
+
+        Route::get(
+            'templates/{template}/preview',
+            [CustomerTemplateController::class, 'preview']
+        )->name('templates.preview');
+
+        Route::resource('messages', MessageController::class);
+
+        Route::get(
+            'messages/{message}/preview',
+            [MessageController::class, 'preview']
+        )->name('messages.preview');
     });
 
     // Profile Routes
@@ -74,7 +91,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         // Templates
         Route::resource('templates', TemplateController::class);
 
-        // Admin Message Templates (désactivé pour le moment)
+        // Admin Message Templates (disabled for now)
         // Route::resource('message_templates', MessageTemplateController::class);
     });
 
