@@ -228,3 +228,35 @@ Breadcrumbs::for('customer.message_templates.edit', function (BreadcrumbTrail $t
     $trail->push(__('message_templates.edit'), route('customer.message_templates.edit', $messageTemplate->id));
 });
 
+// Customer Templates
+Breadcrumbs::for('templates', function (BreadcrumbTrail $trail) {
+    $trail->parent('customer.dashboard');
+    $trail->push(__('templates.title'), route('customer.templates.index'));
+});
+
+Breadcrumbs::for('templates-show', function (BreadcrumbTrail $trail, $template) {
+    $trail->parent('templates');
+    $trail->push($template->name, route('customer.templates.show', $template->id));
+});
+
+// Customer Messages
+Breadcrumbs::for('customer.messages.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('customer.dashboard');
+    $trail->push(__('messages.title'), route('customer.messages.index'));
+});
+
+Breadcrumbs::for('customer.messages.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('customer.messages.index');
+    $trail->push(__('messages.create'), route('customer.messages.create'));
+});
+
+Breadcrumbs::for('customer.messages.edit', function (BreadcrumbTrail $trail, $message) {
+    $trail->parent('customer.messages.index');
+    $trail->push(__('messages.edit'), route('customer.messages.edit', $message->id));
+});
+
+Breadcrumbs::for('customer.messages.show', function (BreadcrumbTrail $trail, $message) {
+    $trail->parent('customer.messages.index');
+    $trail->push($message->id, route('customer.messages.show', $message->id));
+});
+
