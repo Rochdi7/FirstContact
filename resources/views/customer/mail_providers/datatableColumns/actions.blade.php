@@ -4,19 +4,6 @@
 </a>
 <ul class="dropdown-menu">
 
-    @can('show mail_providers')
-        <li>
-            <a href="{{ route('customer.mail_providers.show', $mail_provider->id) }}"
-               class="dropdown-item btn btn-sm btn-active-icon-dark btn-text-dark">
-                <i class="ki-duotone ki-book-square fs-3">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                    <span class="path3"></span>
-                </i>
-                {{ __('buttons.show') }}
-            </a>
-        </li>
-    @endcan
 
     @can('edit mail_providers')
         <li>

@@ -2,20 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Announcement</title>
+    <title>{{ $subject ?? 'Announcement' }}</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
-        .container { background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        p { color: #666; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .email-wrapper {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        header {
+            background-color: #004080;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px 8px 0 0;
+        }
+        header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        footer {
+            background-color: #f2f2f2;
+            color: #777;
+            font-size: 12px;
+            padding: 15px 25px;
+            border-radius: 0 0 8px 8px;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>{{ $announcement_title }}</h1>
-    <p>Dear {{ $recipient_name }},</p>
-    <p>{{ $announcement_body }}</p>
-    <p>Thank you for being part of our community.</p>
-</div>
+    <div class="email-wrapper">
+        <header>
+            <h2>FirstContact</h2>
+        </header>
+
+        <h1 style="color:#333; margin-top: 30px;">{{ $subject }}</h1>
+
+        <div style="margin-top: 20px; color: #666;">
+            {!! $body !!}
+        </div>
+
+        <footer>
+            <p>Sent via FirstContact Email Platform</p>
+            <p>&copy; {{ date('Y') }} FirstContact. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>

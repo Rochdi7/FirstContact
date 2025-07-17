@@ -8,7 +8,7 @@ return [
     'create' => 'Create Message Template',
     'edit' => 'Edit Message Template',
     'delete' => 'Delete Message Template',
-    'show' => 'Show Message Template: :name',
+    'show' => 'Show Message Template: :campaign_name',
     'new' => 'New Message Template',
 
     'form' => [
@@ -17,13 +17,13 @@ return [
     ],
 
     'fields' => [
-        'name' => 'Template Name',
+        'campaign_name' => 'Campaign Name',
         'subject' => 'Subject',
         'body' => 'Body',
     ],
 
     'filter' => [
-        'name' => 'Filter by name',
+        'campaign_name' => 'Filter by campaign name',
         'subject' => 'Filter by subject',
     ],
 

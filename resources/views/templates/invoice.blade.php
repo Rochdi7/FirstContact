@@ -2,60 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Invoice</title>
+    <title>{{ $subject ?? 'Invoice' }}</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
-        .invoice-box { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { margin-bottom: 20px; color: #333; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
-        th { background-color: #f9f9f9; }
-        .total { font-weight: bold; }
-        .footer { margin-top: 30px; font-size: 12px; color: #777; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .email-wrapper {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        header {
+            background-color: #004080;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px 8px 0 0;
+        }
+        header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        footer {
+            background-color: #f2f2f2;
+            color: #777;
+            font-size: 12px;
+            padding: 15px 25px;
+            border-radius: 0 0 8px 8px;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
-<div class="invoice-box">
-    <h1>Invoice #{{ $invoice_number }}</h1>
-    <p><strong>Date:</strong> {{ $invoice_date }}</p>
-    <p><strong>Customer:</strong> {{ $customer_name }}</p>
-    <table>
-        <thead>
-        <tr>
-            <th>Item</th>
-            <th>Qty</th>
-            <th>Unit Price</th>
-            <th>Total</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($items as $item)
-            <tr>
-                <td>{{ $item['name'] }}</td>
-                <td>{{ $item['quantity'] }}</td>
-                <td>${{ number_format($item['price'], 2) }}</td>
-                <td>${{ number_format($item['price'] * $item['quantity'], 2) }}</td>
-            </tr>
-        @endforeach
-        </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="3" class="total">Subtotal:</td>
-            <td>${{ number_format($subtotal, 2) }}</td>
-        </tr>
-        <tr>
-            <td colspan="3" class="total">Tax:</td>
-            <td>${{ number_format($tax, 2) }}</td>
-        </tr>
-        <tr>
-            <td colspan="3" class="total">Total:</td>
-            <td>${{ number_format($total, 2) }}</td>
-        </tr>
-        </tfoot>
-    </table>
-    <div class="footer">
-        Thank you for your business!
+    <div class="email-wrapper">
+        <header>
+            <h2>FirstContact</h2>
+        </header>
+
+        <h1 style="color:#333; margin-top: 30px;">{{ $subject }}</h1>
+
+        <div style="margin-top: 20px; color: #555;">
+            {!! $body !!}
+        </div>
+
+        <footer>
+            <p>Sent via FirstContact Email Platform</p>
+            <p>&copy; {{ date('Y') }} FirstContact. All rights reserved.</p>
+        </footer>
     </div>
-</div>
 </body>
 </html>

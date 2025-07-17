@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Blade;
 
 class MessageController extends Controller
 {
@@ -36,10 +37,14 @@ class MessageController extends Controller
                 ->addColumn('provider', fn($row) => optional($row->mailProvider)->provider ?? '-')
                 ->addColumn('message_template', fn($row) => optional($row->messageTemplate)->name ?? '-')
                 ->addColumn('layout_template', fn($row) => optional($row->template)->name ?? '-')
-                ->addColumn('created_at_blade', fn($row) =>
+                ->addColumn(
+                    'created_at_blade',
+                    fn($row) =>
                     view('customer.messages.datatableColumns.created_at_blade', compact('row'))->render()
                 )
-                ->addColumn('actions', fn($row) =>
+                ->addColumn(
+                    'actions',
+                    fn($row) =>
                     view('customer.messages.datatableColumns.actions', ['message' => $row])->render()
                 )
                 ->rawColumns(['created_at_blade', 'actions'])
@@ -212,42 +217,52 @@ class MessageController extends Controller
      */
     public function preview($id)
     {
-        $message = Message::with(['template', 'recipients.contact'])
+        $message = Message::with(['template', 'messageTemplate', 'recipients.contact'])
             ->where('user_id', Auth::id())
             ->findOrFail($id);
 
         $this->authorize('view', $message);
 
-        $viewPath = optional($message->template)->view_path;
-        if (!$viewPath || !view()->exists($viewPath)) {
-            abort(404, 'Template view not found.');
+        // Use default template if none is selected
+        $viewPath = $message->template->view_path ?? 'templates.default';
+
+        if (!view()->exists($viewPath)) {
+            abort(404, 'Template view not found: ' . $viewPath);
         }
 
-        $data = $this->prepareTemplateData($message);
-
-        return view($viewPath, $data);
-    }
-
-    /**
-     * Prepare data for the template rendering.
-     */
-    protected function prepareTemplateData($message)
-    {
-        $recipient = $message->recipients->first()->contact ?? null;
-        $template = $message->template;
-
+        $recipient = $message->recipients->first()?->contact;
         $recipientName = $recipient
             ? $recipient->first_name . ' ' . $recipient->last_name
             : 'User';
 
+        $variables = $this->prepareTemplateData($message, $recipientName);
+
+        $bodyHtml = Blade::render($message->messageTemplate->body, $variables);
+
+        return view($viewPath, [
+            'subject' => $message->messageTemplate->subject,
+            'body' => $bodyHtml,
+            'sender_name' => Auth::user()->name,
+        ]);
+    }
+
+
+
+    /**
+     * Prepare data for the template rendering.
+     */
+    protected function prepareTemplateData($message, $recipientName)
+    {
+        $template = $message->template;
+
         return match (optional($template)->view_path) {
-            'templates.event_reminder' => [
+            'emails.templates.event' => [
                 'recipient_name' => $recipientName,
                 'event_title' => $template?->name ?? 'Event Reminder',
                 'event_date' => now()->addDays(15)->format('Y-m-d'),
                 'event_location' => 'TBD',
             ],
-            'templates.invoice' => [
+            'emails.templates.invoice' => [
                 'invoice_number' => 'INV-' . str_pad($message->id, 3, '0', STR_PAD_LEFT),
                 'invoice_date' => now()->format('Y-m-d'),
                 'customer_name' => $recipientName,
@@ -258,21 +273,21 @@ class MessageController extends Controller
                 'tax' => 5.00,
                 'total' => 55.00,
             ],
-            'templates.hackathon_invite' => [
+            'emails.templates.hackathon' => [
                 'recipient_name' => $recipientName,
                 'event_name' => $template?->name ?? 'Hackathon Invite',
                 'event_date' => now()->addDays(30)->format('Y-m-d'),
                 'event_location' => 'Online',
-                'registration_link' => 'https://devaga.com/register',
+                'registration_link' => 'https://firstcontact.com/register',
             ],
-            'templates.general_announcement' => [
+            'emails.templates.announcement' => [
                 'recipient_name' => $recipientName,
                 'announcement_title' => $template?->name ?? 'General Announcement',
-                'announcement_body' => 'This is a general announcement message.',
+                'announcement_body' => 'This is a general announcement.',
             ],
-            'templates.new_offer' => [
+            'emails.templates.offer' => [
                 'recipient_name' => $recipientName,
-                'offer_details' => 'Special offer for you!',
+                'offer_details' => 'Limited time discount on all services!',
                 'expiry_date' => now()->addDays(7)->format('Y-m-d'),
             ],
             default => [

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('templates', function (Blueprint $table) {
             $table->id();
 
-            // SaaS best practice: link template to the owner user
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
 
             $table->string('name');

@@ -13,8 +13,12 @@ class TemplateSeeder extends Seeder
         // Get all available plans (we'll attach all for demo)
         $plans = Plan::all();
 
-        // Templates data
+        // Templates data (include the default layout as well)
         $templates = [
+            [
+                'name' => 'Default Layout',
+                'view_path' => 'templates.default',
+            ],
             [
                 'name' => 'Invoice Template',
                 'view_path' => 'templates.invoice',
@@ -34,13 +38,13 @@ class TemplateSeeder extends Seeder
         ];
 
         foreach ($templates as $templateData) {
-            $template = Template::create([
-                'name' => $templateData['name'],
-                'view_path' => $templateData['view_path'],
-            ]);
+            $template = Template::firstOrCreate(
+                ['view_path' => $templateData['view_path']],
+                ['name' => $templateData['name']]
+            );
 
-            // Attach plans to template (attach all plans for demo)
-            $template->plans()->attach($plans->pluck('id'));
+            // Attach all plans to the template (if not already attached)
+            $template->plans()->syncWithoutDetaching($plans->pluck('id'));
         }
     }
 }

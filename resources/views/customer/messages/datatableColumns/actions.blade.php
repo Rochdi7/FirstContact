@@ -4,6 +4,16 @@
 </a>
 <ul class="dropdown-menu">
     <li>
+        <a href="{{ route('customer.messages.show', $message->id) }}"
+           class="dropdown-item btn btn-sm btn-active-icon-dark btn-text-dark">
+            <i class="ki-duotone ki-eye fs-3">
+                <span class="path1"></span>
+                <span class="path2"></span>
+            </i>
+            {{ __('buttons.show') }}
+        </a>
+    </li>
+    <li>
         <a href="{{ route('customer.messages.edit', $message->id) }}"
            class="dropdown-item btn btn-sm btn-active-icon-dark btn-text-dark">
             <i class="ki-duotone ki-notepad-edit fs-3">

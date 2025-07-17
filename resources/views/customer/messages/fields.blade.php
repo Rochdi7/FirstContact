@@ -42,7 +42,12 @@
 
     <!-- Layout Template -->
     <div class="form-group col-md-6 mb-7">
-        <label class="fw-semibold fs-6 mb-2">{{ __('messages.fields.layout_template') }}</label>
+        <label class="fw-semibold fs-6 mb-2">
+            {{ __('messages.fields.layout_template') }}
+            <span class="text-muted fw-normal fs-7 d-block">
+                (Optional — leave empty to send as plain Gmail-style message)
+            </span>
+        </label>
         <select name="template_id"
                 class="form-select form-select-solid {{ $errors->has('template_id') ? 'is-invalid' : '' }}"
                 data-control="select2"

@@ -2,23 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hackathon Invitation</title>
+    <title>{{ $subject ?? 'Event Reminder' }}</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; }
-        .container { background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #343a40; }
-        p { color: #495057; }
-        .btn { display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px; margin-top: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .email-wrapper {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        header {
+            background-color: #004080;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px 8px 0 0;
+        }
+        header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        footer {
+            background-color: #f2f2f2;
+            color: #777;
+            font-size: 12px;
+            padding: 15px 25px;
+            border-radius: 0 0 8px 8px;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>You're Invited to {{ $event_name }}!</h1>
-    <p>Dear {{ $recipient_name }},</p>
-    <p>We are excited to invite you to participate in our upcoming hackathon: <strong>{{ $event_name }}</strong> happening on {{ $event_date }} at {{ $event_location }}.</p>
-    <p>Don't miss the chance to collaborate, innovate, and win great prizes!</p>
-    <a href="{{ $registration_link }}" class="btn">Register Now</a>
-    <p style="margin-top: 30px;">We look forward to seeing you there!</p>
-</div>
+    <div class="email-wrapper">
+        <header>
+            <h2>FirstContact</h2>
+        </header>
+
+        <h1 style="color:#333; margin-top: 30px;">{{ $subject }}</h1>
+
+        <div style="margin-top: 20px; color: #555;">
+            {!! $body !!}
+        </div>
+
+        <footer>
+            <p>Sent via FirstContact Email Platform</p>
+            <p>&copy; {{ date('Y') }} FirstContact. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
