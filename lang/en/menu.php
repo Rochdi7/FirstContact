@@ -8,6 +8,7 @@ return [
     'plans' => 'Plans',
     'templates' => 'Templates',
     'message_templates' => 'Message Templates',
+    'messages' => 'Messages',
     'contacts' => 'Contacts',
     'mail_providers' => 'Mail Providers',
     'settings' => 'Settings',
