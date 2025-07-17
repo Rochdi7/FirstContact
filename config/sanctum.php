@@ -13,14 +13,12 @@ return [
     | authentication cookies. Typically, these should include your local
     | and production domains which access your API via a frontend SPA.
     |
+    | For mobile apps using token auth, you usually don't need to list
+    | anything here except possibly localhost for testing.
+    |
     */
 
-    'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
-        '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
-        Sanctum::currentApplicationUrlWithPort(),
-        // Sanctum::currentRequestHost(),
-    ))),
+    'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', 'localhost,127.0.0.1,::1')),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,8 +55,6 @@ return [
     | Sanctum can prefix new tokens in order to take advantage of numerous
     | security scanning initiatives maintained by open source platforms
     | that notify developers if they commit tokens into repositories.
-    |
-    | See: https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning
     |
     */
 
