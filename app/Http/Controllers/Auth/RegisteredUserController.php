@@ -41,10 +41,11 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'approved' => 1,
         ]);
 
         // Assign the "Store Manager" role
-        $user->assignRole('Store Manager');
+        $user->assignRole('Customer');
 
         event(new Registered($user));
 

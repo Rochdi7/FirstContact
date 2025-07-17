@@ -7,21 +7,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TemplateResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  Request  $request
-     * @return array<string, mixed>
-     */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'name' => $this->name,
-            'view_path' => $this->view_path,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'id'         => $this->id,
+            'user_id'    => $this->user_id,
+            'name'       => $this->name,
+            'view_path'  => $this->view_path,
+            'created_at' => $this->created_at?->format('Y-m-d\TH:i:s.v\Z'),
+            'updated_at' => $this->updated_at?->format('Y-m-d\TH:i:s.v\Z'),
         ];
     }
 }

@@ -28,8 +28,15 @@ class TemplateController extends Controller
                     return $template->plans->pluck('name')->implode(', ');
                 })
                 ->addColumn('view_path', fn($template) => $template->view_path)
-                ->addColumn('created_at_blade', fn($template) => view('admin.templates.datatableColumns.created_at_blade', compact('template')))
-                ->addColumn('actions', fn($template) => view('admin.templates.datatableColumns.actions', compact('template')));
+                ->addColumn('created_at_blade', fn($template) => 
+                    view('admin.templates.datatableColumns.created_at_blade', compact('template'))
+                )
+                ->addColumn('actions', fn($template) => 
+                    view('admin.templates.datatableColumns.actions', [
+                        'template' => $template,
+                        'routePrefix' => 'admin.templates.'
+                    ])
+                );
 
             return $datatables->make(true);
         }
@@ -46,7 +53,6 @@ class TemplateController extends Controller
 
         return view('admin.templates.create', compact('plans', 'views'));
     }
-
 
     public function store(StoreTemplateRequest $request)
     {
