@@ -3,24 +3,9 @@
     {{ __('buttons.actions') }}
 </a>
 <ul class="dropdown-menu">
-
-    @can('show contacts')
-        <li>
-            <a href="{{ route('customer.contacts.show', $contact->id) }}"
-               class="dropdown-item btn btn-sm btn-active-icon-dark btn-text-dark">
-                <i class="ki-duotone ki-book-square fs-3">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                    <span class="path3"></span>
-                </i>
-                {{ __('buttons.show') }}
-            </a>
-        </li>
-    @endcan
-
     @can('edit contacts')
         <li>
-            <a href="{{ route('customer.contacts.edit', $contact->id) }}"
+            <a href="{{ route('customer.contacts.edit', $contact->id) }}" 
                class="dropdown-item btn btn-sm btn-active-icon-dark btn-text-dark">
                 <i class="ki-duotone ki-notepad-edit fs-3">
                     <span class="path1"></span>
@@ -33,7 +18,8 @@
 
     @can('delete contacts')
         <li>
-            <form action="{{ route('customer.contacts.destroy', $contact->id) }}" method="POST"
+            <form action="{{ route('customer.contacts.destroy', $contact->id) }}" 
+                  method="POST"
                   onsubmit="return confirm('{{ __('messages.confirm_delete') }}');">
                 @csrf
                 @method('DELETE')
@@ -50,5 +36,4 @@
             </form>
         </li>
     @endcan
-
 </ul>

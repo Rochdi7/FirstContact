@@ -1,11 +1,16 @@
-<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm dropdown-toggle"
-   data-bs-toggle="dropdown" aria-expanded="false">
+<a href="#"
+   class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm dropdown-toggle"
+   data-bs-toggle="dropdown"
+   aria-expanded="false">
     {{ __('buttons.actions') }}
 </a>
+
 <ul class="dropdown-menu">
-    @can('edit templates')
+
+    @can('update', $template)
         <li>
-            <a href="{{ route('admin.templates.edit', $template->id) }}" class="dropdown-item btn btn-sm btn-active-icon-dark btn-text-dark">
+            <a href="{{ route('admin.templates.edit', $template->id) }}"
+               class="dropdown-item btn btn-sm btn-active-icon-dark btn-text-dark">
                 <i class="ki-duotone ki-notepad-edit fs-3">
                     <span class="path1"></span>
                     <span class="path2"></span>
@@ -14,7 +19,8 @@
             </a>
         </li>
     @endcan
-    @can('delete templates')
+
+    @can('delete', $template)
         <li>
             <form action="{{ route('admin.templates.destroy', $template->id) }}" method="POST"
                   onsubmit="return confirm('{{ __('messages.confirm_delete') }}');">
@@ -33,4 +39,5 @@
             </form>
         </li>
     @endcan
+
 </ul>

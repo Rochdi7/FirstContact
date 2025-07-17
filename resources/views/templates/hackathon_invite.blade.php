@@ -18,7 +18,6 @@
     <p>We are excited to invite you to participate in our upcoming hackathon: <strong>{{ $event_name }}</strong> happening on {{ $event_date }} at {{ $event_location }}.</p>
     <p>Don't miss the chance to collaborate, innovate, and win great prizes!</p>
     <a href="{{ $registration_link }}" class="btn">Register Now</a>
-
     <p style="margin-top: 30px;">We look forward to seeing you there!</p>
 </div>
 </body>

@@ -17,10 +17,8 @@
 <body>
 <div class="invoice-box">
     <h1>Invoice #{{ $invoice_number }}</h1>
-
     <p><strong>Date:</strong> {{ $invoice_date }}</p>
     <p><strong>Customer:</strong> {{ $customer_name }}</p>
-
     <table>
         <thead>
         <tr>
@@ -55,7 +53,6 @@
         </tr>
         </tfoot>
     </table>
-
     <div class="footer">
         Thank you for your business!
     </div>
