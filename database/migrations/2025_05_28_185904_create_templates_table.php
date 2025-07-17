@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('view_path');
-            $table->timestamps();
+            $table->timestampas();
         });
     }
 

@@ -28,31 +28,63 @@ class RolesPermissionsSeeder extends Seeder
             'edit my_profile',
 
             // Users
-            'create users', 'edit users', 'show users', 'delete users', 'access users',
+            'create users',
+            'edit users',
+            'show users',
+            'delete users',
+            'access users',
 
             // Roles
-            'create roles', 'edit roles', 'show roles', 'delete roles', 'access roles',
+            'create roles',
+            'edit roles',
+            'show roles',
+            'delete roles',
+            'access roles',
 
-            // Permissions
-            'create permissions', 'edit permissions', 'show permissions', 'delete permissions', 'access permissions',
+            // Permissionscredentials
+            'create permissions',
+            'edit permissions',
+            'show permissions',
+            'delete permissions',
+            'access permissions',
 
             // Settings
             'access settings',
 
             // Countries
-            'create countries', 'edit countries', 'show countries', 'delete countries', 'access countries',
+            'create countries',
+            'edit countries',
+            'show countries',
+            'delete countries',
+            'access countries',
 
             // Currencies
-            'create currencies', 'edit currencies', 'show currencies', 'delete currencies', 'access currencies',
+            'create currencies',
+            'edit currencies',
+            'show currencies',
+            'delete currencies',
+            'access currencies',
 
             // Store Types
-            'create store_types', 'edit store_types', 'show store_types', 'delete store_types', 'access store_types',
+            'create store_types',
+            'edit store_types',
+            'show store_types',
+            'delete store_types',
+            'access store_types',
 
             // Plans
-            'create plans', 'edit plans', 'show plans', 'delete plans', 'access plans',
+            'create plans',
+            'edit plans',
+            'show plans',
+            'delete plans',
+            'access plans',
 
             // Templates
-            'create templates', 'edit templates', 'show templates', 'delete templates', 'access templates'
+            'create templates',
+            'edit templates',
+            'show templates',
+            'delete templates',
+            'access templates'
 
         ];
 
@@ -81,8 +113,14 @@ class RolesPermissionsSeeder extends Seeder
 
         $permissions_account_manager = [
             'edit my_profile',
-            'create users', 'edit users', 'show users', 'delete users', 'access users',
-            'create contacts', 'edit contacts', 'access contacts'
+            'create users',
+            'edit users',
+            'show users',
+            'delete users',
+            'access users',
+            'create contacts',
+            'edit contacts',
+            'access contacts'
         ];
 
         foreach ($permissions_account_manager as $permission) {
@@ -140,11 +178,34 @@ class RolesPermissionsSeeder extends Seeder
 
         $permissions_store_manager = [
             'edit my_profile',
-            'create contacts', 'edit contacts', 'show contacts', 'delete contacts', 'access contacts',
-            'create mail_providers', 'edit mail_providers', 'show mail_providers', 'delete mail_providers', 'access mail_providers',
-            'create message_templates', 'edit message_templates', 'show message_templates', 'delete message_templates', 'access message_templates'
 
+            'create contacts',
+            'edit contacts',
+            'show contacts',
+            'delete contacts',
+            'access contacts',
+
+            'create mail_providers',
+            'edit mail_providers',
+            'show mail_providers',
+            'delete mail_providers',
+            'access mail_providers',
+
+            'create message_templates',
+            'edit message_templates',
+            'show message_templates',
+            'delete message_templates',
+            'access message_templates',
+
+            'create messages',
+            'edit messages',
+            'show messages',
+            'delete messages',
+            'access messages',
+
+            'access customer_templates',
         ];
+
 
         foreach ($permissions_store_manager as $permission) {
             $perm = Permission::firstOrCreate(['name' => $permission]);
