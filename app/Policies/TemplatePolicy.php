@@ -9,27 +9,32 @@ class TemplatePolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->can('access templates');
+        return $user->can('access templates')
+            || $user->can('access customer_templates');
     }
 
     public function view(User $user, Template $template): bool
     {
-        return $user->can('show templates');
+        return $user->can('show templates')
+            || $user->can('access customer_templates');
     }
 
     public function create(User $user): bool
     {
-        return $user->can('create templates');
+        return $user->can('create templates')
+            || $user->can('access customer_templates');
     }
 
     public function update(User $user, Template $template): bool
     {
-        return $user->can('edit templates');
+        return $user->can('edit templates')
+            || $user->can('access customer_templates');
     }
 
     public function delete(User $user, Template $template): bool
     {
-        return $user->can('delete templates');
+        return $user->can('delete templates')
+            || $user->can('access customer_templates');
     }
 
     public function restore(User $user, Template $template): bool
