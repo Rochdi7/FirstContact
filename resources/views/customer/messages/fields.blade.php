@@ -1,16 +1,18 @@
 <div class="row">
     <!-- Mail Provider -->
     <div class="form-group col-md-6 mb-7">
-        <label class="required fw-semibold fs-6 mb-2">{{ __('messages.fields.mail_provider') }}</label>
+        <label class="fw-semibold fs-6 mb-2">
+            {{ __('messages.fields.mail_provider') }}
+            <span class="text-muted fw-normal fs-7 d-block">
+                (Optional — default provider will be used if not selected)
+            </span>
+        </label>
         <select name="mail_provider_id"
-                class="form-select form-select-solid {{ $errors->has('mail_provider_id') ? 'is-invalid' : '' }}"
-                data-control="select2"
-                data-placeholder="{{ __('messages.fields.mail_provider') }}"
-                required>
+            class="form-select form-select-solid {{ $errors->has('mail_provider_id') ? 'is-invalid' : '' }}"
+            data-control="select2" data-placeholder="{{ __('messages.fields.mail_provider') }}">
             <option></option>
-            @foreach($mailProviders as $id => $name)
-                <option value="{{ $id }}"
-                        {{ old('mail_provider_id') == $id ? 'selected' : '' }}>
+            @foreach ($mailProviders as $id => $name)
+                <option value="{{ $id }}" {{ old('mail_provider_id') == $id ? 'selected' : '' }}>
                     {{ $name }} (ID: {{ $id }})
                 </option>
             @endforeach
@@ -20,17 +22,16 @@
         @enderror
     </div>
 
+
     <!-- Message Template -->
     <div class="form-group col-md-6 mb-7">
         <label class="fw-semibold fs-6 mb-2">{{ __('messages.fields.message_template') }}</label>
         <select name="message_template_id"
-                class="form-select form-select-solid {{ $errors->has('message_template_id') ? 'is-invalid' : '' }}"
-                data-control="select2"
-                data-placeholder="{{ __('messages.fields.message_template') }}">
+            class="form-select form-select-solid {{ $errors->has('message_template_id') ? 'is-invalid' : '' }}"
+            data-control="select2" data-placeholder="{{ __('messages.fields.message_template') }}">
             <option></option>
-            @foreach($messageTemplates as $id => $name)
-                <option value="{{ $id }}"
-                        {{ old('message_template_id') == $id ? 'selected' : '' }}>
+            @foreach ($messageTemplates as $id => $name)
+                <option value="{{ $id }}" {{ old('message_template_id') == $id ? 'selected' : '' }}>
                     {{ $name }}
                 </option>
             @endforeach
@@ -49,13 +50,11 @@
             </span>
         </label>
         <select name="template_id"
-                class="form-select form-select-solid {{ $errors->has('template_id') ? 'is-invalid' : '' }}"
-                data-control="select2"
-                data-placeholder="{{ __('messages.fields.layout_template') }}">
+            class="form-select form-select-solid {{ $errors->has('template_id') ? 'is-invalid' : '' }}"
+            data-control="select2" data-placeholder="{{ __('messages.fields.layout_template') }}">
             <option></option>
-            @foreach($templates as $id => $name)
-                <option value="{{ $id }}"
-                        {{ old('template_id') == $id ? 'selected' : '' }}>
+            @foreach ($templates as $id => $name)
+                <option value="{{ $id }}" {{ old('template_id') == $id ? 'selected' : '' }}>
                     {{ $name }} (ID: {{ $id }})
                 </option>
             @endforeach
@@ -69,16 +68,12 @@
     <div class="form-group col-md-12 mb-7">
         <label class="required fw-semibold fs-6 mb-2">{{ __('messages.fields.recipients') }}</label>
         <select name="recipients[]"
-                class="form-select form-select-solid {{ $errors->has('recipients') ? 'is-invalid' : '' }}"
-                data-control="select2"
-                data-placeholder="{{ __('messages.fields.recipients') }}"
-                data-close-on-select="false"
-                data-allow-clear="true"
-                multiple
-                required>
-            @foreach($contacts as $contact)
+            class="form-select form-select-solid {{ $errors->has('recipients') ? 'is-invalid' : '' }}"
+            data-control="select2" data-placeholder="{{ __('messages.fields.recipients') }}"
+            data-close-on-select="false" data-allow-clear="true" multiple required>
+            @foreach ($contacts as $contact)
                 <option value="{{ $contact->id }}"
-                        {{ collect(old('recipients', []))->contains($contact->id) ? 'selected' : '' }}>
+                    {{ collect(old('recipients', []))->contains($contact->id) ? 'selected' : '' }}>
                     {{ $contact->first_name }} {{ $contact->last_name }} ({{ $contact->email }})
                 </option>
             @endforeach
