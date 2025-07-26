@@ -17,14 +17,14 @@ class StoreMessageRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'mail_provider_id' => ['required', 'integer', 'exists:mail_providers,id'],
-            'message_template_id' => ['nullable', 'integer', 'exists:message_templates,id'],
-            'template_id' => ['nullable', 'integer', 'exists:templates,id'],
-            'recipients' => ['required', 'array', 'min:1'],
-            'recipients.*' => ['integer', 'exists:contacts,id'],
+            'message_template_id' => ['nullable', 'exists:message_templates,id'],
+            'template_id' => ['nullable', 'exists:templates,id'],
+            'mail_provider_id' => ['nullable', 'exists:mail_providers,id'],
+            'recipients' => ['required', 'array'],
+            'recipients.*' => ['exists:contacts,id'],
         ];
     }
 }
