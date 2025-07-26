@@ -11,7 +11,13 @@ class TemplateController extends Controller
 {
     public function index()
     {
-        $templates = Template::with('plans')->get();
+        $templates = Template::query()
+            ->where(function ($query) {
+                $query->whereNull('user_id') 
+                    ->orWhere('user_id', auth()->id()); 
+            })
+            ->select('id', 'name', 'view_path') 
+            ->get();
 
         return TemplateResource::collection($templates)
             ->additional(['message' => 'Templates fetched successfully.']);

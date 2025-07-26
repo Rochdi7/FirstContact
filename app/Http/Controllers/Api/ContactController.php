@@ -40,6 +40,7 @@ class ContactController extends Controller
             ],
             'phone'      => ['nullable', 'string', 'max:20'],
             'company'    => ['nullable', 'string', 'max:255'],
+            'image'      => ['nullable', 'image', 'max:2048'], // max 2MB
         ]);
 
         if ($validator->fails()) {
@@ -59,10 +60,12 @@ class ContactController extends Controller
             'company'    => $validated['company'] ?? null,
         ]);
 
+        if ($request->hasFile('image')) {
+            $contact->addMediaFromRequest('image')->toMediaCollection('image');
+        }
+
         return (new ContactResource($contact))
-            ->additional([
-                'message' => 'Contact created successfully.'
-            ])
+            ->additional(['message' => 'Contact created successfully.'])
             ->response()
             ->setStatusCode(201);
     }
@@ -92,17 +95,21 @@ class ContactController extends Controller
             ],
             'phone'      => ['nullable', 'string', 'max:20'],
             'company'    => ['nullable', 'string', 'max:255'],
+            'image'      => ['nullable', 'image', 'max:2048'],
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
         $validated = $validator->validated();
 
         $contact->update($validated);
+
+        if ($request->hasFile('image')) {
+            $contact->clearMediaCollection('image');
+            $contact->addMediaFromRequest('image')->toMediaCollection('image');
+        }
 
         return (new ContactResource($contact))
             ->additional(['message' => 'Contact updated successfully.']);

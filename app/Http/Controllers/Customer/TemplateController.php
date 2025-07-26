@@ -72,6 +72,8 @@ class TemplateController extends Controller
     {
         return match ($viewPath) {
             'templates.invoice' => [
+                'subject' => 'Your Invoice from FirstContact',
+                'body' => '<p>Dear Acme Corporation,</p><p>Thank you for your business. Please find your invoice below.</p>',
                 'invoice_number' => 'INV-001',
                 'invoice_date' => now()->format('Y-m-d'),
                 'customer_name' => 'Acme Corporation',
@@ -84,6 +86,8 @@ class TemplateController extends Controller
                 'total' => 219.97,
             ],
             'templates.hackathon_invite' => [
+                'subject' => 'You’re Invited: Laravel Hackathon',
+                'body' => '<p>Join us for the Laravel Hackathon on August 15, 2025.</p>',
                 'event_name' => 'Laravel Hackathon',
                 'event_date' => '2025-08-15',
                 'event_location' => 'Online Zoom Call',
@@ -91,22 +95,31 @@ class TemplateController extends Controller
                 'registration_link' => 'https://hackathon-register.example.com',
             ],
             'templates.event_reminder' => [
+                'subject' => 'Reminder: Annual Gala Dinner',
+                'body' => '<p>Don’t forget to attend the Annual Gala Dinner on September 1st.</p>',
                 'event_title' => 'Annual Gala Dinner',
                 'event_date' => '2025-09-01',
                 'event_location' => 'Conference Hall A',
                 'recipient_name' => 'John Smith',
             ],
             'templates.general_announcement' => [
+                'subject' => 'Company Announcement',
+                'body' => '<p>We are thrilled to announce new features launching next month.</p>',
                 'announcement_title' => 'Important Update from Our Company',
                 'announcement_body' => 'We are thrilled to announce new features launching next month. Stay tuned for astonishment!',
                 'recipient_name' => 'Alex Johnson',
             ],
             'templates.new_offer' => [
-                'recipient_name' => 'rochdi karouali',
+                'subject' => 'Exclusive Offer Just for You!',
+                'body' => '<p>Enjoy 50% off on your next purchase. Limited time offer!</p>',
+                'recipient_name' => 'Rochdi Karouali',
                 'offer_details' => '50% off on your next purchase',
                 'expiry_date' => '2025-07-16',
             ],
-            default => [],
+            default => [
+                'subject' => 'Template Preview',
+                'body' => '<p>This is a preview of the selected template.</p>',
+            ],
         };
     }
 }

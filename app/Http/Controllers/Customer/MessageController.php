@@ -84,6 +84,23 @@ class MessageController extends Controller
         $validated = $request->validated();
         Log::info('Storing message with validated data: ', $validated);
 
+        // Use default mail provider if not provided
+        if (empty($validated['mail_provider_id'])) {
+            $defaultProviderId = config('mail.default_provider_id');
+
+            if (!$defaultProviderId) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors([
+                        'mail_provider_id' => 'Please select a mail provider or set a default in the configuration.'
+                    ]);
+            }
+
+            $validated['mail_provider_id'] = $defaultProviderId;
+            Log::info('Fallback mail provider applied: ' . $defaultProviderId);
+        }
+
         $message = null;
 
         DB::transaction(function () use ($validated, &$message) {
@@ -100,31 +117,27 @@ class MessageController extends Controller
         });
 
         $action = $request->input('action');
-        Log::info('Action received: ' . $action);
 
         if ($action === 'save_send') {
             try {
-                Log::info('Dispatching email job for message ID: ' . $message->id);
                 SendMessageEmail::dispatch($message);
-                Log::info('Email job dispatched successfully for message ID: ' . $message->id);
+                return redirect()
+                    ->route('customer.messages.show', $message->id)
+                    ->with('success', __('messages.messages.created') . ' and queued for sending');
             } catch (\Exception $e) {
-                Log::error('Failed to dispatch email job for message ID ' . $message->id . ': ' . $e->getMessage());
+                Log::error('Failed to dispatch email job: ' . $e->getMessage());
                 return redirect()
                     ->route('customer.messages.index')
                     ->with('error', 'Message saved, but email job dispatch failed: ' . $e->getMessage());
             }
         }
 
-        if ($action === 'save_send') {
-            return redirect()
-                ->route('customer.messages.show', $message->id)
-                ->with('success', __('messages.messages.created') . ' and queued for sending');
-        }
-
         return redirect()
             ->route('customer.messages.index')
             ->with('success', __('messages.messages.created'));
     }
+
+
 
     /**
      * Display the specified resource.
@@ -178,7 +191,11 @@ class MessageController extends Controller
         $this->authorize('update', $message);
 
         $validated = $request->validated();
-        Log::info('Updating message with validated data: ', $validated);
+
+        // Optional fallback for mail provider on update (not mandatory)
+        if (empty($validated['mail_provider_id'])) {
+            $validated['mail_provider_id'] = config('mail.default_provider_id');
+        }
 
         DB::transaction(function () use ($message, $validated) {
             $message->update([
@@ -188,6 +205,7 @@ class MessageController extends Controller
             ]);
 
             $message->recipients()->delete();
+
             foreach ($validated['recipients'] as $contactId) {
                 $message->recipients()->create(['contact_id' => $contactId]);
             }
@@ -197,6 +215,7 @@ class MessageController extends Controller
             ->route('customer.messages.index')
             ->with('success', __('messages.messages.updated'));
     }
+
 
     /**
      * Remove the specified resource from storage.
