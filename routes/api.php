@@ -6,7 +6,8 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\MailProviderController;
 use App\Http\Controllers\Api\MessageTemplateController;
 use App\Http\Controllers\Api\TemplateController;
-
+use App\Http\Controllers\Api\MessagePreviewController;
+use App\Http\Controllers\Api\TemplatePreviewController;
 
 // PUBLIC ROUTES
 Route::post('/login', [AuthController::class, 'login']);
@@ -21,6 +22,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Only listing templates for customers
     Route::get('templates', [TemplateController::class, 'index']);
+
+    Route::get('/messages/{id}/preview', [MessagePreviewController::class, 'preview']);
+    Route::get('/templates/{id}/preview', [TemplatePreviewController::class, 'preview']);
 
     Route::get('/user', [AuthController::class, 'user']);
     Route::put('/profile', [AuthController::class, 'updateProfile']);
