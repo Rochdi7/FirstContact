@@ -15,6 +15,11 @@ class MailProviderFactory
         $settings = $mailProvider->settings;
         $provider = $mailProvider->provider;
 
+        // Check that essential keys exist
+        if (empty($settings['email']) || empty($settings['password'])) {
+            throw new \InvalidArgumentException("Missing required credentials for MailProvider ID: {$mailProvider->id}");
+        }
+
         return match ($provider) {
             'gmail'   => new GmailProvider($settings),
             'outlook' => new OutlookProvider($settings),
@@ -22,3 +27,4 @@ class MailProviderFactory
         };
     }
 }
+
