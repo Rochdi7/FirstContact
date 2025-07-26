@@ -10,7 +10,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
@@ -21,64 +20,88 @@ class SendMessageEmail implements ShouldQueue
 
     protected $message;
 
-    /**
-     * Create a new job instance.
-     */
     public function __construct(Message $message)
     {
         $this->message = $message;
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle()
     {
-        $mailProvider = MailProvider::findOrFail($this->message->mail_provider_id);
-        $settings = $mailProvider->settings;
-        $settings['password'] = Crypt::decrypt($settings['password']);
-        $mailProvider->settings = $settings;
+        // Step 1: Determine mail provider (fallback to default if missing)
+        $providerId = $this->message->mail_provider_id;
 
-        $mailer = MailProviderFactory::create($mailProvider);
-        $templateContent = $this->getTemplateContent();
-
-        foreach ($this->message->recipients as $recipient) {
-            $contact = $recipient->contact;
-            $mailer->sendEmail(
-                $contact->email,
-                $this->message->messageTemplate->subject,
-                $templateContent
-            );
+        if (!$providerId) {
+            $providerId = config('mail.default_provider_id') ?? env('MAIL_DEFAULT_PROVIDER_ID');
+            Log::info("Fallback mail provider applied: {$providerId}");
         }
 
-        Log::info('Email sent successfully for message ID: ' . $this->message->id);
+        // Step 2: Load mail provider
+        $mailProvider = MailProvider::find($providerId);
+
+        if (!$mailProvider) {
+            Log::critical("MailProvider ID [$providerId] not found.");
+            return;
+        }
+
+        // Step 3: Decrypt password
+        try {
+            $settings = $mailProvider->settings;
+            $settings['password'] = Crypt::decrypt($settings['password']);
+            $mailProvider->settings = $settings;
+        } catch (\Throwable $e) {
+            Log::error("Failed to decrypt password for MailProvider ID [$providerId]: " . $e->getMessage());
+            return;
+        }
+
+        // Step 4: Resolve mailer
+        $mailer = MailProviderFactory::create($mailProvider);
+        if (!$mailer) {
+            Log::error("No mailer could be created for provider ID [$providerId]");
+            return;
+        }
+
+        // Step 5: Prepare email content
+        $templateContent = $this->getTemplateContent();
+
+        // Step 6: Send to each recipient
+        foreach ($this->message->recipients as $recipient) {
+            $contact = $recipient->contact;
+            if (!$contact || !$contact->email) {
+                Log::warning("Missing contact or email for recipient ID: {$recipient->id}");
+                continue;
+            }
+
+            try {
+                $mailer->sendEmail(
+                    $contact->email,
+                    $this->message->messageTemplate->subject,
+                    $templateContent
+                );
+
+                Log::info("Email sent to {$contact->email} for message ID: {$this->message->id}");
+            } catch (\Throwable $e) {
+                Log::error("Failed to send email to {$contact->email}: " . $e->getMessage());
+            }
+        }
     }
 
-    /**
-     * Get the final HTML content from the view + rendered body.
-     */
     protected function getTemplateContent()
     {
         $template = $this->message->template;
         $viewPath = $template?->view_path;
 
-        // Fallback if not set or view doesn't exist
         if (!$viewPath || !view()->exists($viewPath)) {
-            Log::warning("Missing or invalid view path '{$viewPath}', using templates.default");
+            Log::warning("Missing or invalid view path '{$viewPath}', using fallback 'templates.default'");
             $viewPath = 'templates.default';
         }
 
-        // Make sure default template is always valid
         if (!view()->exists($viewPath)) {
             Log::critical("Fallback template view 'templates.default' is missing!");
-            return '<strong>Template not found.</strong>'; // Final safety fallback
+            return '<strong>Template not found.</strong>';
         }
 
-        // Prepare data
         $recipient = $this->message->recipients->first()?->contact;
-        $recipientName = $recipient
-            ? $recipient->first_name . ' ' . $recipient->last_name
-            : 'User';
+        $recipientName = $recipient ? $recipient->first_name . ' ' . $recipient->last_name : 'User';
 
         $data = $this->prepareTemplateData($recipientName);
 
@@ -92,13 +115,10 @@ class SendMessageEmail implements ShouldQueue
         return view($viewPath, [
             'subject' => $this->message->messageTemplate->subject,
             'body' => $renderedBody,
-            'sender_name' => Auth::user()?->name ?? 'FirstContact',
+            'sender_name' => $this->message->sender_name ?? 'FirstContact',
         ])->render();
     }
 
-    /**
-     * Dynamic data injection for body variables.
-     */
     protected function prepareTemplateData(string $recipientName): array
     {
         $template = $this->message->template;
