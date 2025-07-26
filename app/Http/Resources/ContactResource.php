@@ -22,6 +22,7 @@ class ContactResource extends JsonResource
             'email'      => $this->email,
             'phone'      => $this->phone,
             'company'    => $this->company,
+            'image_url'  => $this->getFirstMediaUrl('image') ?: null,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];
