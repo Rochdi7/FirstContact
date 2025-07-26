@@ -15,6 +15,7 @@ return [
     */
 
     'default' => env('MAIL_MAILER', 'log'),
+    'default_provider_id' => env('MAIL_DEFAULT_PROVIDER_ID', null),
 
     /*
     |--------------------------------------------------------------------------
