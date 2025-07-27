@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('mail_provider_id')->constrained('mail_providers')->onDelete('cascade');
         
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
         
     }
