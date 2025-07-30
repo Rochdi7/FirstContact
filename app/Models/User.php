@@ -42,6 +42,8 @@ class User extends Authenticatable implements HasMedia
         'birthday',
         'gender',
         'last_activity',
+        'otp_code',
+        'otp_expires_at',
     ];
 
     protected $appends = [
