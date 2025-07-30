@@ -11,6 +11,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use App\Http\Resources\UserResource;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OtpMail;
+use Illuminate\Support\Carbon;
+
 
 class AuthController extends Controller
 {
@@ -164,5 +168,50 @@ class AuthController extends Controller
             ])
             ->response()
             ->setStatusCode($statusCode);
+    }
+
+    public function sendOtp(Request $request)
+    {
+        $request->validate(['email' => 'required|email|exists:users,email']);
+
+        $user = User::where('email', $request->email)->first();
+
+        $otp = random_int(100000, 999999);
+
+        $user->update([
+            'otp_code' => $otp,
+            'otp_expires_at' => now()->addMinutes(10),
+        ]);
+
+        Mail::to($user->email)->send(new OtpMail($otp));
+
+        return response()->json(['message' => 'Code envoyé à votre adresse email.'], 200);
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+            'otp_code' => ['required', 'digits:6'],
+            'password' => ['required', 'confirmed', 'min:8'],
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (
+            !$user ||
+            $user->otp_code !== $request->otp_code ||
+            now()->gt(Carbon::parse($user->otp_expires_at))
+        ) {
+            return response()->json(['message' => 'OTP invalide ou expiré'], 422);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password),
+            'otp_code' => null,
+            'otp_expires_at' => null,
+        ]);
+
+        return response()->json(['message' => 'Mot de passe réinitialisé avec succès.'], 200);
     }
 }
