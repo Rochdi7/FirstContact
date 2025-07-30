@@ -12,6 +12,7 @@
         "laravel/sanctum": "^4.1",
         "laravel/tinker": "^2.9",
         "mcamara/laravel-localization": "*",
+        "spatie/laravel-data": "^4.17",
         "spatie/laravel-medialibrary": "^11.9",
         "spatie/laravel-permission": "^6.9",
         "spatie/laravel-sluggable": "^3.6",
