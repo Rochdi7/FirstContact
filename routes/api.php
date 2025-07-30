@@ -12,7 +12,11 @@ use App\Http\Controllers\Api\TemplatePreviewController;
 // PUBLIC ROUTES
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+
+Route::post('/otp/request', [AuthController::class, 'sendOtp']);
+Route::post('/otp/verify', [AuthController::class, 'verifyOtp']);
 
 // AUTHENTICATED ROUTES
 Route::middleware('auth:sanctum')->group(function () {
@@ -20,7 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('mail-providers', MailProviderController::class);
     Route::apiResource('message-templates', MessageTemplateController::class);
 
-    // Only listing templates for customers
     Route::get('templates', [TemplateController::class, 'index']);
 
     Route::get('/messages/{id}/preview', [MessagePreviewController::class, 'preview']);
